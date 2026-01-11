@@ -1,0 +1,16 @@
+# ENV1 / ENV2
+environment: ENV1
+
+# web / api / mobile
+framework: web
+
+web:
+  grid: false
+  debug: false
+  headless: false
+  translationTest: false
+api:
+  debug: false
+mobile:
+  system: ios
+  debug: false
