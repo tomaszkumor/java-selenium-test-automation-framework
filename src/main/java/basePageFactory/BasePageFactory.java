@@ -28,8 +28,8 @@ public class BasePageFactory {
     private void initElements() {
         String framework = TestStackProperties.getFramework();
         switch (framework) {
-            case "selenium", "api" -> initElementsForDesktopTest();
-            case "appium" -> initElementsForMobileTest();
+            case "web", "api" -> initElementsForDesktopTest();
+            case "mobile" -> initElementsForMobileTest();
         }
     }
 

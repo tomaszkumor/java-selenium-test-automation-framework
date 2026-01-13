@@ -302,7 +302,7 @@ public class CheckActions extends BaseActions {
         try {
             WebDriverWait wait = new WebDriverWait(getWebDriver().getDriver(), Duration.ofSeconds(duration));
             wait.pollingEvery(Duration.ofMillis(interval));
-            wait.until(ExpectedConditions.not(ExpectedConditions.presenceOfElementLocated(locator)));
+            wait.until(ExpectedConditions.presenceOfElementLocated(locator));
             return true;
         } catch (TimeoutException e) {
             return false;

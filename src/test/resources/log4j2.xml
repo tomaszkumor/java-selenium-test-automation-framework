@@ -4,9 +4,9 @@
             <patternLayout pattern="%-5level %d{yyyy-MM-dd HH:mm:ss} [%C{1}] - %msg%n" />
         </Console>
     </Appenders>
-    <Logers>
+    <Loggers>
         <Root level="info">
             <AppenderRef ref="console" />
         </Root>
-    </Logers>
+    </Loggers>
 </Configuration>
