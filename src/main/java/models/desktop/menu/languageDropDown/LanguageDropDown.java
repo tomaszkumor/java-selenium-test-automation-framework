@@ -22,8 +22,8 @@ public class LanguageDropDown extends LanguageDropDownLocators {
 
     @Step("Check available languages")
     public LanguageDropDown checkAvailableLanguages() {
-        List<String> actualLanguages = getExpectedLanguagesFromDataProvider();
-        List<String> expectedLanguages = getActualLanguagesFromDataProvider();
+        List<String> actualLanguages = getActualLanguagesFromDataProvider();
+        List<String> expectedLanguages = getExpectedLanguagesFromDataProvider();
         compareLanguages(actualLanguages, expectedLanguages);
 
         return this;

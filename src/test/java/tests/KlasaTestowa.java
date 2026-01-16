@@ -11,7 +11,7 @@ public class KlasaTestowa extends BaseTest {
     @Test
     public void metoda() {
         new LandingPage()
-                .clickOnLanguagesDropDown()
-                .checkAvailableLanguages();
+                .clickOnFlightsTab()
+                .selectFlightDirection();
     }
 }
