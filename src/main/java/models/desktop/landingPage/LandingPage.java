@@ -8,6 +8,7 @@ public class LandingPage extends LandingPageLocators {
     public LandingPage() {
         browser.waitForPageLoaded();
         checkUrl();
+        hideAd();
         log.info("Landing page has been displayed.");
     }
 
@@ -16,5 +17,12 @@ public class LandingPage extends LandingPageLocators {
         String actualUrl = get.getCurrentUrl();
 
         Assert.assertEquals(actualUrl, expectedUrl, "URL mismatch.");
+    }
+
+    private void hideAd() {
+        if(check.isElementDisplayed(hideAdButton, 10)) {
+            click.clickOnVisibleElement(hideAdButton, 10);
+            log.info("Hide ad button has been clicked.");
+        }
     }
 }
