@@ -19,7 +19,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import static utils.logger.Log4J.log;
-
+//TODO: Dodaj DropDown Searches (po wyszukaniu lotu to jest taka historia)
 public class NavigationHeaderAndFooter extends NavigationHeaderAndFooterLocators {
     @Step("Click on Landing page button")
     public LandingPage clickOnLandingPageButton() {

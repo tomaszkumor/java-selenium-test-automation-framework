@@ -1,5 +1,7 @@
 package dataProviders.dataProviders.landingPage;
 
+import constants.CabinClass;
+import constants.FlightDestiny;
 import constants.Language;
 import constants.Location;
 import dataProviders.dataProvidersModels.Airport;
@@ -7,7 +9,7 @@ import dataProviders.dataProvidersModels.landingPageModels.LandingPageModel;
 import org.testng.annotations.DataProvider;
 
 import java.util.List;
-
+//TODO: Porob tu metody zeby zwracaly listy elementow w zaleznosci od nazwy testu
 public class LandingPageDP {
     @DataProvider
     Object[][] landingPageTest() {
@@ -15,6 +17,8 @@ public class LandingPageDP {
                 {LandingPageModel.builder()
                         .expectedDepartureLocation(Location.NEW_YORK_CITY_AA)
                         .expectedArrivalLocation(Location.BERLIN)
+                        .expectedCabinClass(CabinClass.FIRST)
+                        .expectedFlightDestiny(FlightDestiny.ONE_WAY)
                         .expectedDepartureLocations(
                                 List.of(new Airport(Location.NEW_YORK_CITY_AA),
                                         new Airport(Location.LONDON),

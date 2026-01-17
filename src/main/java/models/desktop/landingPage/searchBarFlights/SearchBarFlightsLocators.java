@@ -1,7 +1,6 @@
 package models.desktop.landingPage.searchBarFlights;
 
 import basePageFactory.BasePageFactory;
-import models.desktop.landingPage.LandingPage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -13,7 +12,7 @@ public class SearchBarFlightsLocators extends BasePageFactory {
     @FindBy(xpath = "//div[@id = 'tab-flights']")
     WebElement flightsSearchBar;
     @FindBy(xpath = "//select[contains(@class, 'flight_way')]")
-    WebElement flightDirectionSelect;
+    WebElement flightDestinySelect;
     @FindBy(xpath = "//select[@id = 'flight_type']")
     WebElement cabinClassSelect;
     @FindBy(xpath = "//input[@name = 'from']")

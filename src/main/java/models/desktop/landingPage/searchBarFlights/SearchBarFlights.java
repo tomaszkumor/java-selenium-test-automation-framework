@@ -7,6 +7,7 @@ import dataProviders.dataProvidersModels.landingPageModels.LandingPageModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,25 +41,75 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
         return this;
     }
 
+    public SearchBarFlights selectFlightDestiny(LandingPageModel landingPageModel) {
+        selectSpecificFlightDestiny(landingPageModel);
+        compareFlightDestinies(landingPageModel);
+
+        return this;
+    }
+
+    public SearchBarFlights selectCabinClass(LandingPageModel landingPageModel) {
+        selectSpecificCabinClass(landingPageModel);
+        compareCabinClasses(landingPageModel);
+
+        return this;
+    }
+
+    public void clickOnSearchButton() {
+        //TODO: Zrób to
+    }
+
+    private void selectSpecificFlightDestiny(LandingPageModel landingPageModel) {
+        String expectedFlightDestinyValue = getExpectedFlightDestinyFromDataProvider(landingPageModel);
+        Select flightDestinySelect = new Select(this.flightDestinySelect);
+        flightDestinySelect.selectByContainsVisibleText(expectedFlightDestinyValue);
+    }
+
+    private void selectSpecificCabinClass(LandingPageModel landingPageModel) {
+        String expectedCabinClassValue = getExpectedCabinClassFromDataProvider(landingPageModel);
+        Select cabinClassSelect = new Select(this.cabinClassSelect);
+        cabinClassSelect.selectByContainsVisibleText(expectedCabinClassValue);
+    }
+
+    private void compareFlightDestinies(LandingPageModel landingPageModel) {
+        String expectedFlightDestinyValue = getExpectedFlightDestinyFromDataProvider(landingPageModel);
+
+        Select flightDestinySelect = new Select(this.flightDestinySelect);
+        String actualFlightDestinyValue = get.getTextFromElement(flightDestinySelect.getFirstSelectedOption());
+        assertThat(actualFlightDestinyValue).isEqualTo(expectedFlightDestinyValue).as("Flight destiny value check");
+
+        log.info("Selected flight destiny value: " + actualFlightDestinyValue);
+    }
+
+    private void compareCabinClasses(LandingPageModel landingPageModel) {
+        String expectedCabinClassValue = getExpectedCabinClassFromDataProvider(landingPageModel);
+
+        Select cabinClassSelect = new Select(this.cabinClassSelect);
+        String actualCabinClassValue = get.getTextFromElement(cabinClassSelect.getFirstSelectedOption());
+        assertThat(actualCabinClassValue).isEqualTo(expectedCabinClassValue).as("Cabin class value check");
+
+        log.info("Selected cabin class value: " + actualCabinClassValue);
+    }
+
     private void findAndSelectDepartureLocation(LandingPageModel landingPageModel) {
         Location expectedDepartureLocation = getExpectedDepartureLocationFromDataProvider(landingPageModel);
         WebElement location = getExpectedDepartureLocationInput(expectedDepartureLocation);
-        clickOnSpecificLocation(location, expectedDepartureLocation);
+        clickOnSpecificLocation(location, expectedDepartureLocation, "departure");
     }
 
     private void findAndSelectArrivalLocation(LandingPageModel landingPageModel) {
         Location expectedArrivalLocation = getExpectedArrivalLocationFromDataProvider(landingPageModel);
         WebElement location = getExpectedArrivalLocationInput(expectedArrivalLocation);
-        clickOnSpecificLocation(location, expectedArrivalLocation);
+        clickOnSpecificLocation(location, expectedArrivalLocation, "arrival");
     }
 
-    private void clickOnSpecificLocation(WebElement locationInput, Location location) {
+    private void clickOnSpecificLocation(WebElement locationInput, Location location, String destiny) {
         String airportName = location.getAirportName();
         String airportCity = location.getAirportCity();
         String airportCountry = location.getAirportCountry();
 
         click.clickOnElement(locationInput, 15);
-        log.info("{}, {}, {} has been clicked.", airportName, airportCity, airportCountry);
+        log.info("{}, {}, {} has been set as {} location.", airportName, airportCity, airportCountry, destiny);
     }
 
     private void checkDepartureLocationsAvailability(LandingPageModel landingPageModel) {
@@ -69,17 +120,18 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
     }
 
     private void checkArrivalLocationsAvailability(LandingPageModel landingPageModel) {
-        List<Airport> actualDepartureLocations = getActualArrivalLocations();
-        List<Airport> expectedDepartureLocations = getExpectedArrivalLocationsFromDataProvider(landingPageModel);
+        List<Airport> actualArrivalLocations = getActualArrivalLocations();
+        List<Airport> expectedArrivalLocations = getExpectedArrivalLocationsFromDataProvider(landingPageModel);
 
-        compareLocations(actualDepartureLocations, expectedDepartureLocations);
+        compareLocations(actualArrivalLocations, expectedArrivalLocations);
     }
 
-    private void compareLocations(List<Airport> actualDepartureAirports, List<Airport> expectedDepartureAirports) {
-        assertThat(actualDepartureAirports)
+    private void compareLocations(List<Airport> actualLocations, List<Airport> expectedLocations) {
+        assertThat(actualLocations)
                 .doesNotHaveDuplicates()
                 .usingRecursiveFieldByFieldElementComparator()
-                .containsExactlyInAnyOrderElementsOf(expectedDepartureAirports);
+                .containsExactlyInAnyOrderElementsOf(expectedLocations)
+                .as("Locations check");
     }
 
     private WebElement getExpectedDepartureLocationInput(Location expectedDepartureLocation) {
@@ -151,8 +203,8 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
 
     private void checkIfTabIsActive() {
         assertThat(check.isAttributeEqualTo(flightsTab, "aria-selected", "true", 50, 5))
-                .as("Check whether 'Flights' tab is an active tab")
-                .isTrue();
+                .isTrue()
+                .as("Flights tab activity check");
 
         log.info("Flights tab is an active tab.");
     }
@@ -189,14 +241,6 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
         check.isNumberOfElementsGreaterThan(departureAirportLocator, 0, 50, 10);
     }
 
-    public void selectFlightDirection() {
-
-    }
-
-    public void selectCabinClass() {
-    }
-
-
     public void swapDepartureAndArrivalLocations() {
 
     }
@@ -226,5 +270,13 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
 
     private List<Airport> getExpectedArrivalLocationsFromDataProvider(LandingPageModel landingPageModel) {
         return landingPageModel.getExpectedArrivalLocations();
+    }
+
+    private String getExpectedFlightDestinyFromDataProvider(LandingPageModel landingPageModel) {
+        return landingPageModel.getExpectedFlightDestiny().getFlightDestiny();
+    }
+
+    private String getExpectedCabinClassFromDataProvider(LandingPageModel landingPageModel) {
+        return landingPageModel.getExpectedCabinClass().getCabinClass();
     }
 }

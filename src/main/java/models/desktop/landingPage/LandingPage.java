@@ -1,6 +1,5 @@
 package models.desktop.landingPage;
 
-import lombok.SneakyThrows;
 import models.desktop.landingPage.searchBarCars.SearchBarCars;
 import models.desktop.landingPage.searchBarFlights.SearchBarFlights;
 import models.desktop.landingPage.searchBarHotels.SearchBarHotels;
@@ -11,8 +10,10 @@ import org.testng.Assert;
 import static utils.logger.Log4J.log;
 
 public class LandingPage extends LandingPageLocators {
+    public static ThreadLocal<Boolean> IS_AD_CLOSED = ThreadLocal.withInitial(() -> false);
+
     public LandingPage() {
-        browser.waitForPageLoaded();
+        browser.waitForPageLoaded(30);
         checkUrl();
         hideAd();
         log.info("Landing page has been displayed.");
@@ -59,11 +60,15 @@ public class LandingPage extends LandingPageLocators {
 
         Assert.assertEquals(actualUrl, expectedUrl, "URL mismatch.");
     }
-//TODO: gdy jest zamkniety to przy ponownej probie zamkniecia czeka 10 sekund z displayem. popraw to na presentBylocator, albo wrzuc flage statyczna
+
     private void hideAd() {
-        if (check.isElementDisplayed(hideAdButton, 10)) {
-            click.clickOnVisibleElement(hideAdButton, 10);
-            log.info("Hide ad button has been clicked.");
+        if (!LandingPage.IS_AD_CLOSED.get()) {
+            if (check.isElementDisplayed(hideAdButton, 10)) {
+                click.clickOnVisibleElement(hideAdButton, 10);
+                log.info("Hide ad button has been clicked.");
+
+                LandingPage.IS_AD_CLOSED.set(true);
+            }
         }
     }
 }

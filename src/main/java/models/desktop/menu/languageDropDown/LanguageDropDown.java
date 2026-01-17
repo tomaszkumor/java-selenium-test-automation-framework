@@ -82,7 +82,8 @@ public class LanguageDropDown extends LanguageDropDownLocators {
     private void compareLanguages(List<String> actualLanguages, List<String> expectedLanguages) {
         assertThat(actualLanguages)
                 .containsExactlyInAnyOrderElementsOf(expectedLanguages)
-                .doesNotHaveDuplicates();
+                .doesNotHaveDuplicates()
+                .as("Languages check");
     }
 
     private List<String> getActualLanguages() {
