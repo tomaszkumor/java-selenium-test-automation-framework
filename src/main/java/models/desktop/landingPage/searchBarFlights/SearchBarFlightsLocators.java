@@ -1,12 +1,13 @@
 package models.desktop.landingPage.searchBarFlights;
 
+import basePageFactory.BasePageFactory;
 import models.desktop.landingPage.LandingPage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class SearchBarFlightsLocators extends LandingPage {
+public class SearchBarFlightsLocators extends BasePageFactory {
     @FindBy(xpath = "//ul[@id = 'tab']//button[@data-bs-target = '#tab-flights']")
     WebElement flightsTab;
     @FindBy(xpath = "//div[@id = 'tab-flights']")

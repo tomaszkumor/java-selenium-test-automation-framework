@@ -1,6 +1,7 @@
 package models.desktop.menu.languageDropDown;
 
 import constants.Language;
+import dataProviders.dataProvidersModels.landingPageModels.LandingPageModel;
 import io.qameta.allure.Step;
 import models.desktop.landingPage.LandingPage;
 import org.openqa.selenium.By;
@@ -21,9 +22,9 @@ public class LanguageDropDown extends LanguageDropDownLocators {
     }
 
     @Step("Check available languages")
-    public LanguageDropDown checkAvailableLanguages() {
-        List<String> actualLanguages = getActualLanguagesFromDataProvider();
-        List<String> expectedLanguages = getExpectedLanguagesFromDataProvider();
+    public LanguageDropDown checkAvailableLanguages(LandingPageModel landingPageModel) {
+        List<String> actualLanguages = getActualLanguages();
+        List<String> expectedLanguages = getExpectedLanguages(landingPageModel);
         compareLanguages(actualLanguages, expectedLanguages);
 
         return this;
@@ -84,7 +85,7 @@ public class LanguageDropDown extends LanguageDropDownLocators {
                 .doesNotHaveDuplicates();
     }
 
-    private List<String> getActualLanguagesFromDataProvider() {
+    private List<String> getActualLanguages() {
         By languageNameLocator = By.xpath("//a[contains(@href, 'language')]/span");
         check.isNumberOfElementsGreaterThan(languageNameLocator, 0, 50, 10);
 
@@ -96,9 +97,10 @@ public class LanguageDropDown extends LanguageDropDownLocators {
         return actualLanguages;
     }
 
-    private List<String> getExpectedLanguagesFromDataProvider() {
-        //TODO: To trzeba dostarczyc z DP
-        return List.of(Language.EN.getLanguage(), Language.AR.getLanguage(), Language.TR.getLanguage(), Language.RU.getLanguage(), Language.FR.getLanguage(), Language.ZH.getLanguage(), Language.DE.getLanguage());
+    private List<String> getExpectedLanguages(LandingPageModel landingPageModel) {
+        List<Language> expectedLanguagesA = getExpectedLanguagesFromDataProvider(landingPageModel);
+
+        return expectedLanguagesA.stream().map(Language::getLanguage).toList();
     }
 
     private void selectLanguage(Language language) {
@@ -118,6 +120,10 @@ public class LanguageDropDown extends LanguageDropDownLocators {
             case ZH -> chineseLanguageButton;
             case DE -> germanLanguageButton;
         };
+    }
+
+    private List<Language> getExpectedLanguagesFromDataProvider(LandingPageModel landingPageModel) {
+        return landingPageModel.getLanguages();
     }
 
 }

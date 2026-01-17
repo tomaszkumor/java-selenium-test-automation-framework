@@ -6,7 +6,7 @@ framework: web
 
 web:
   grid: false
-  debug: true
+  debug: false
   headless: false
 mobile:
   system: ios

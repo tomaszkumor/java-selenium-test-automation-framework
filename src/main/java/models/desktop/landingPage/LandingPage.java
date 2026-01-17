@@ -59,7 +59,7 @@ public class LandingPage extends LandingPageLocators {
 
         Assert.assertEquals(actualUrl, expectedUrl, "URL mismatch.");
     }
-
+//TODO: gdy jest zamkniety to przy ponownej probie zamkniecia czeka 10 sekund z displayem. popraw to na presentBylocator, albo wrzuc flage statyczna
     private void hideAd() {
         if (check.isElementDisplayed(hideAdButton, 10)) {
             click.clickOnVisibleElement(hideAdButton, 10);

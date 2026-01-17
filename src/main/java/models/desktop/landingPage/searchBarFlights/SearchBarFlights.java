@@ -1,8 +1,9 @@
 package models.desktop.landingPage.searchBarFlights;
 
 
-import constants.Language;
+import constants.Location;
 import dataProviders.dataProvidersModels.Airport;
+import dataProviders.dataProvidersModels.landingPageModels.LandingPageModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -21,54 +22,88 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
         log.info("Flights search bar is displayed.");
     }
 
-    //TODO: Tu trzeba przekazac obiekt z nazwa lotniska
-    public void selectFlightDirection() {
-        // kliknij na inputa z miejscami wylotu
-        click.clickOnEnabledElement(departureLocationInput, 15);
+    public SearchBarFlights selectDepartureLocation(LandingPageModel landingPageModel) {
+        clickOnDepartureLocationInput();
+        checkIfDepartureAirportsAreDisplayed();
+        checkDepartureLocationsAvailability(landingPageModel);
+        findAndSelectDepartureLocation(landingPageModel);
 
-        // sprawdz czy pojawil sie container
-        check.isElementDisplayed(departureLocationsContainer, 15);
-
-        // Sprawdz czy na liscie lotnisk pojawily sie lotniska
-        By departureAirportLocator = By.xpath("//div[contains(@class, 'results-container-from')]/div");
-        check.isNumberOfElementsGreaterThan(departureAirportLocator, 0, 50, 10);
-
-        // pobierz aktualna liste lotnisk
-        List<Airport> actualDepartureAirports = getActualDepartureAirportsFromDataProvider();
-
-        // pobierz oczekiwana liste lotnisk
-        List<Airport> expectedDepartureAirports = getExpectedDepartureAirportsFromDataProvider();
-
-        // porownaj obie listy
-        compareAirports(actualDepartureAirports, expectedDepartureAirports);
-        // napisz lokator do ktorego wpiszesz nazwe lotniska
-        // stworz webelement
-        // kliknij w niego
+        return this;
     }
 
-    private void compareAirports(List<Airport> actualDepartureAirports, List<Airport> expectedDepartureAirports) {
+    public SearchBarFlights selectArrivalLocation(LandingPageModel landingPageModel) {
+        clickOnArrivalLocationInput();
+        checkIfArrivalAirportsAreDisplayed();
+        checkArrivalLocationsAvailability(landingPageModel);
+        findAndSelectArrivalLocation(landingPageModel);
+
+        return this;
+    }
+
+    private void findAndSelectDepartureLocation(LandingPageModel landingPageModel) {
+        Location expectedDepartureLocation = getExpectedDepartureLocationFromDataProvider(landingPageModel);
+        WebElement location = getExpectedDepartureLocationInput(expectedDepartureLocation);
+        clickOnSpecificLocation(location, expectedDepartureLocation);
+    }
+
+    private void findAndSelectArrivalLocation(LandingPageModel landingPageModel) {
+        Location expectedArrivalLocation = getExpectedArrivalLocationFromDataProvider(landingPageModel);
+        WebElement location = getExpectedArrivalLocationInput(expectedArrivalLocation);
+        clickOnSpecificLocation(location, expectedArrivalLocation);
+    }
+
+    private void clickOnSpecificLocation(WebElement locationInput, Location location) {
+        String airportName = location.getAirportName();
+        String airportCity = location.getAirportCity();
+        String airportCountry = location.getAirportCountry();
+
+        click.clickOnElement(locationInput, 15);
+        log.info("{}, {}, {} has been clicked.", airportName, airportCity, airportCountry);
+    }
+
+    private void checkDepartureLocationsAvailability(LandingPageModel landingPageModel) {
+        List<Airport> actualDepartureLocations = getActualDepartureLocations();
+        List<Airport> expectedDepartureLocations = getExpectedDepartureLocationsFromDataProvider(landingPageModel);
+
+        compareLocations(actualDepartureLocations, expectedDepartureLocations);
+    }
+
+    private void checkArrivalLocationsAvailability(LandingPageModel landingPageModel) {
+        List<Airport> actualDepartureLocations = getActualArrivalLocations();
+        List<Airport> expectedDepartureLocations = getExpectedArrivalLocationsFromDataProvider(landingPageModel);
+
+        compareLocations(actualDepartureLocations, expectedDepartureLocations);
+    }
+
+    private void compareLocations(List<Airport> actualDepartureAirports, List<Airport> expectedDepartureAirports) {
         assertThat(actualDepartureAirports)
                 .doesNotHaveDuplicates()
                 .usingRecursiveFieldByFieldElementComparator()
                 .containsExactlyInAnyOrderElementsOf(expectedDepartureAirports);
     }
 
-    private List<Airport> getActualDepartureAirportsFromDataProvider() {
+    private WebElement getExpectedDepartureLocationInput(Location expectedDepartureLocation) {
+        String locationCode = expectedDepartureLocation.getAirportCode();
+        By locationLocator = By.xpath("//div[contains(@class, 'results-container-from')]/div[@data-code = '" + locationCode + "']");
+
+        return getWebDriver().getDriver().findElement(locationLocator);
+    }
+
+    private WebElement getExpectedArrivalLocationInput(Location expectedDepartureLocation) {
+        String locationCode = expectedDepartureLocation.getAirportCode();
+        By locationLocator = By.xpath("//div[contains(@class, 'results-container-to')]/div[@data-code = '" + locationCode + "']");
+
+        return getWebDriver().getDriver().findElement(locationLocator);
+    }
+
+    private List<Airport> getActualDepartureLocations() {
         List<Airport> actualDepartureLocations = new ArrayList<>();
 
         for (WebElement departureLocation : departureLocations) {
-            String airportName = get.getTextFromElement(departureLocation.findElement(By.xpath(".//small[contains(@class, 'airport--name')]")));
-            String airportCountry = get.getTextFromElement(departureLocation.findElement(By.xpath(".//strong/small")));
-            String airportCode = get.getTextFromElement(departureLocation.findElement(By.xpath("./button")));
-
-            JavascriptExecutor js = (JavascriptExecutor) getWebDriver().getDriver();
-            String airportCity = (String) js.executeScript(
-                    """
-                                var node = arguments[0].firstChild;
-                                return (node && node.nodeType === 3) ? node.textContent.trim() : '';
-                            """,
-                    departureLocation.findElement(By.xpath(".//strong"))
-            );
+            String airportName = getActualAirportName(departureLocation);
+            String airportCity = getActualAirportCityName(departureLocation);
+            String airportCountry = getActualAirportCountryName(departureLocation);
+            String airportCode = getActualAirportCodeName(departureLocation);
 
             actualDepartureLocations.add(new Airport(airportName, airportCity, airportCountry, airportCode));
         }
@@ -76,29 +111,91 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
         return actualDepartureLocations;
     }
 
-    private List<Airport> getExpectedDepartureAirportsFromDataProvider() {
-        //TODO: To trzeba dostarczyc z DP
-        return List.of(
-                new Airport("London Heathrow Airport", "London", "United Kingdom", "LHR"),
-                new Airport("Berlin Brandenburg Willy Brandt", "Berlin", "Germany", "BER"),
-                new Airport("Ninoy Aquino International Airport", "Manila", "Philippines", "MNL"),
-                new Airport("King Abdulaziz International Airport", "Jeddah", "Saudi Arabia", "JED"),
-                new Airport("All Airports", "New York", "United States", "NYC"),
-                new Airport("Domodedovo International Airport", "Moscow", "Russia", "DME"),
-                new Airport("Singapore Changi Airport", "Singapore", "Singapore", "SIN")
+    private List<Airport> getActualArrivalLocations() {
+        List<Airport> actualArrivalLocations = new ArrayList<>();
+
+        for (WebElement arrivalLocation : arrivalLocations) {
+            String airportName = getActualAirportName(arrivalLocation);
+            String airportCity = getActualAirportCityName(arrivalLocation);
+            String airportCountry = getActualAirportCountryName(arrivalLocation);
+            String airportCode = getActualAirportCodeName(arrivalLocation);
+
+            actualArrivalLocations.add(new Airport(airportName, airportCity, airportCountry, airportCode));
+        }
+
+        return actualArrivalLocations;
+    }
+
+    private String getActualAirportName(WebElement location) {
+        return get.getTextFromElement(location.findElement(By.xpath(".//small[contains(@class, 'airport--name')]")));
+    }
+
+    private String getActualAirportCityName(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) getWebDriver().getDriver();
+        return (String) js.executeScript(
+                """
+                            var node = arguments[0].firstChild;
+                            return (node && node.nodeType === 3) ? node.textContent.trim() : '';
+                        """,
+                element.findElement(By.xpath(".//strong"))
         );
+    }
+
+    private String getActualAirportCountryName(WebElement location) {
+        return get.getTextFromElement(location.findElement(By.xpath(".//strong/small")));
+    }
+
+    private String getActualAirportCodeName(WebElement location) {
+        return get.getTextFromElement(location.findElement(By.xpath("./button")));
+    }
+
+    private void checkIfTabIsActive() {
+        assertThat(check.isAttributeEqualTo(flightsTab, "aria-selected", "true", 50, 5))
+                .as("Check whether 'Flights' tab is an active tab")
+                .isTrue();
+
+        log.info("Flights tab is an active tab.");
+    }
+
+    private void checkIfSearchBarIsDisplayed() {
+        check.isElementDisplayed(flightsSearchBar, 15);
+        log.info("Flights search bar has been displayed");
+    }
+
+    private void clickOnDepartureLocationInput() {
+        clickOnLocationInput(departureLocationInput, "Departure");
+    }
+
+    private void clickOnArrivalLocationInput() {
+        clickOnLocationInput(arrivalLocationInput, "Arrival");
+    }
+
+    private void clickOnLocationInput(WebElement location, String locationDestiny) {
+        click.clickOnEnabledElement(location, 15);
+        log.info(locationDestiny + " input has been clicked.");
+    }
+
+    private void checkIfDepartureAirportsAreDisplayed() {
+        checkIfAirportsAreDisplayed(departureLocationsContainer, "from");
+    }
+
+    private void checkIfArrivalAirportsAreDisplayed() {
+        checkIfAirportsAreDisplayed(arrivalLocationsContainer, "to");
+    }
+
+    private void checkIfAirportsAreDisplayed(WebElement airportsContainer, String airportLocator) {
+        check.isElementDisplayed(airportsContainer, 15);
+        By departureAirportLocator = By.xpath("//div[contains(@class, 'results-container-" + airportLocator + "')]/div");
+        check.isNumberOfElementsGreaterThan(departureAirportLocator, 0, 50, 10);
+    }
+
+    public void selectFlightDirection() {
+
     }
 
     public void selectCabinClass() {
     }
 
-    public void selectDepartureLocation() {
-
-    }
-
-    public void selectArrivalLocation() {
-
-    }
 
     public void swapDepartureAndArrivalLocations() {
 
@@ -115,17 +212,19 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
     public void selectPassengersNumber() {
     }
 
-
-    private void checkIfTabIsActive() {
-        assertThat(check.isAttributeEqualTo(flightsTab, "aria-selected", "true", 50, 5))
-                .as("Check whether 'Flights' tab is an active tab")
-                .isTrue();
-
-        log.info("Flights tab is an active tab.");
+    private Location getExpectedDepartureLocationFromDataProvider(LandingPageModel landingPageModel) {
+        return landingPageModel.getExpectedDepartureLocation();
     }
 
-    private void checkIfSearchBarIsDisplayed() {
-        check.isElementDisplayed(flightsSearchBar, 15);
-        log.info("Flights search bar has been displayed");
+    private Location getExpectedArrivalLocationFromDataProvider(LandingPageModel landingPageModel) {
+        return landingPageModel.getExpectedArrivalLocation();
+    }
+
+    private List<Airport> getExpectedDepartureLocationsFromDataProvider(LandingPageModel landingPageModel) {
+        return landingPageModel.getExpectedDepartureLocations();
+    }
+
+    private List<Airport> getExpectedArrivalLocationsFromDataProvider(LandingPageModel landingPageModel) {
+        return landingPageModel.getExpectedArrivalLocations();
     }
 }
