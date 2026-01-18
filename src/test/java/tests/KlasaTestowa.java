@@ -13,14 +13,9 @@ public class KlasaTestowa extends BaseTest {
     @Test(dataProvider = "landingPageTest", dataProviderClass = LandingPageDP.class)
     public void metoda(LandingPageModel landingPageModel) {
         new LandingPage()
-//                .clickOnLanguagesDropDown()
-
-//                .checkAvailableLanguages(landingPageModel)
-//                .selectEnglish()
                 .clickOnFlightsTab()
-                .selectFlightDestiny(landingPageModel)
-                .selectCabinClass(landingPageModel)
-                .selectDepartureLocation(landingPageModel)
-                .selectArrivalLocation(landingPageModel);
+                .selectFlightDestination(landingPageModel)
+                .selectDepartureDate(landingPageModel)
+                .selectReturnDate(landingPageModel);
     }
 }

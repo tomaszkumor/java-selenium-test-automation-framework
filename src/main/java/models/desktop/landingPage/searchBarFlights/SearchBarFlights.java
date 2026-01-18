@@ -2,15 +2,21 @@ package models.desktop.landingPage.searchBarFlights;
 
 
 import constants.Location;
+import constants.LocationType;
 import dataProviders.dataProvidersModels.Airport;
+import dataProviders.dataProvidersModels.Date;
 import dataProviders.dataProvidersModels.landingPageModels.LandingPageModel;
+import lombok.SneakyThrows;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static driver.BaseDriver.getWebDriver;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,27 +30,31 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
     }
 
     public SearchBarFlights selectDepartureLocation(LandingPageModel landingPageModel) {
+        checkDepartureLocationBeforeInput();
         clickOnDepartureLocationInput();
         checkIfDepartureAirportsAreDisplayed();
         checkDepartureLocationsAvailability(landingPageModel);
         findAndSelectDepartureLocation(landingPageModel);
+        checkDepartureLocationAfterInput(landingPageModel);
 
         return this;
     }
 
     public SearchBarFlights selectArrivalLocation(LandingPageModel landingPageModel) {
+        checkArrivalLocationBeforeInput();
         clickOnArrivalLocationInput();
         checkIfArrivalAirportsAreDisplayed();
         checkArrivalLocationsAvailability(landingPageModel);
         findAndSelectArrivalLocation(landingPageModel);
+        checkArrivalLocationAfterInput(landingPageModel);
 
         return this;
     }
-
-    public SearchBarFlights selectFlightDestiny(LandingPageModel landingPageModel) {
-        selectSpecificFlightDestiny(landingPageModel);
+@SneakyThrows
+    public SearchBarFlights selectFlightDestination(LandingPageModel landingPageModel) {
+        selectSpecificFlightDestination(landingPageModel);
         compareFlightDestinies(landingPageModel);
-
+Thread.sleep(5000);
         return this;
     }
 
@@ -55,14 +65,261 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
         return this;
     }
 
+    public SearchBarFlights swapDepartureAndArrivalLocations() {
+        String departureLocationBeforeSwap = get.getValueFromElement(departureLocationInput);
+        String arrivalLocationBeforeSwap = get.getValueFromElement(arrivalLocationInput);
+
+        click.clickOnEnabledElement(swapDirectionsButton, 15);
+
+        String departureLocationAfterSwap = get.getValueFromElement(departureLocationInput);
+        String arrivalLocationAfterSwap = get.getValueFromElement(arrivalLocationInput);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(departureLocationAfterSwap).isEqualTo(arrivalLocationBeforeSwap);
+        softAssertions.assertThat(arrivalLocationAfterSwap).isEqualTo(departureLocationBeforeSwap);
+        softAssertions.assertAll();
+
+        log.info("Locations has been swapped correctly.");
+
+        return this;
+    }
+
+    public SearchBarFlights selectDepartureDate(LandingPageModel landingPageModel) {
+        //TODO: Wprowadz do metod gaszenie DP od returnDate jesli FlightDestination = 'Return'
+        selectDepartureDateYear(landingPageModel);
+        selectDepartureDateMonth(landingPageModel);
+        selectDepartureDateDay(landingPageModel);
+        checkActualDepartureDate(landingPageModel);
+
+        return this;
+    }
+
+    public SearchBarFlights selectReturnDate(LandingPageModel landingPageModel) {
+        selectReturnDateYear(landingPageModel);
+        selectReturnDateMonth(landingPageModel);
+        selectReturnDateDay(landingPageModel);
+        checkActualReturnDate(landingPageModel);
+
+        return this;
+    }
+
+    public void selectDepartureDateYear(LandingPageModel landingPageModel) {
+        clickOnDateInput(LocationType.DEPARTURE, "Departure");
+        checkIfDatePickerWindowIsDisplayed(true, "Departure");
+        clickOnDatePickerHeader(constants.Date.YEAR);
+        selectSpecificDate(landingPageModel, LocationType.DEPARTURE, constants.Date.YEAR);
+        checkIfDatePickerWindowIsDisplayed(false, "Departure");
+    }
+
+    public void selectDepartureDateMonth(LandingPageModel landingPageModel) {
+        clickOnDateInput(LocationType.DEPARTURE, "Departure");
+        checkIfDatePickerWindowIsDisplayed(true, "Departure");
+        clickOnDatePickerHeader(constants.Date.MONTH);
+        selectSpecificDate(landingPageModel, LocationType.DEPARTURE, constants.Date.MONTH);
+        checkIfDatePickerWindowIsDisplayed(false, "Departure");
+    }
+
+    public void selectDepartureDateDay(LandingPageModel landingPageModel) {
+        clickOnDateInput(LocationType.DEPARTURE, "Departure");
+        checkIfDatePickerWindowIsDisplayed(true, "Departure");
+        selectSpecificDate(landingPageModel, LocationType.DEPARTURE, constants.Date.DAY);
+        checkIfDatePickerWindowIsDisplayed(false, "Departure");
+    }
+
+    public void selectReturnDateYear(LandingPageModel landingPageModel) {
+        clickOnDateInput(LocationType.ARRIVAL, "Arrival");
+        checkIfDatePickerWindowIsDisplayed(true, "Arrival");
+        clickOnDatePickerHeader(constants.Date.YEAR);
+        selectSpecificDate(landingPageModel, LocationType.ARRIVAL, constants.Date.YEAR);
+        checkIfDatePickerWindowIsDisplayed(false, "Arrival");
+    }
+
+    public void selectReturnDateMonth(LandingPageModel landingPageModel) {
+        clickOnDateInput(LocationType.ARRIVAL, "Arrival");
+        checkIfDatePickerWindowIsDisplayed(true, "Arrival");
+        clickOnDatePickerHeader(constants.Date.MONTH);
+        selectSpecificDate(landingPageModel, LocationType.ARRIVAL, constants.Date.MONTH);
+        checkIfDatePickerWindowIsDisplayed(false, "Arrival");
+    }
+
+    public void selectReturnDateDay(LandingPageModel landingPageModel) {
+        clickOnDateInput(LocationType.ARRIVAL, "Arrival");
+        checkIfDatePickerWindowIsDisplayed(true, "Arrival");
+        selectSpecificDate(landingPageModel, LocationType.ARRIVAL, constants.Date.DAY);
+        checkIfDatePickerWindowIsDisplayed(false, "Arrival");
+    }
+
+    private void checkActualDepartureDate(LandingPageModel landingPageModel) {
+        checkActualDate(landingPageModel, LocationType.DEPARTURE);
+    }
+
+    private void checkActualReturnDate(LandingPageModel landingPageModel) {
+        checkActualDate(landingPageModel, LocationType.ARRIVAL);
+    }
+
+    private Date getExpectedDateFromDataProvider(LandingPageModel landingPageModel, LocationType locationType) {
+        return switch (locationType) {
+            case DEPARTURE -> landingPageModel.getExpectedDepartureDate();
+            case ARRIVAL -> landingPageModel.getExpectedReturnDate();
+        };
+    }
+
+    private void checkActualDate(LandingPageModel landingPageModel, LocationType locationType) {
+        String actualDepartureDate = switch(locationType) {
+            case DEPARTURE -> get.getValueFromElement(departureDateInput);
+            case ARRIVAL -> get.getValueFromElement(returnDateInput);
+        };
+
+        Date expectedDate = getExpectedDateFromDataProvider(landingPageModel, locationType);
+
+        String year = expectedDate.getYear();
+        String month = String.format("%02d", expectedDate.getMonth().getValue());
+        String day = String.format("%02d", Integer.parseInt(expectedDate.getDay()));
+        String expectedDepartureDateAsString = day.concat("-").concat(month).concat("-").concat(year);
+
+        assertThat(actualDepartureDate).isEqualTo(expectedDepartureDateAsString).as("Departure date check");
+        System.out.println("actualDepartureDate: " + actualDepartureDate);
+        System.out.println("expectedDepartureDateAsString: " + expectedDepartureDateAsString);
+    }
+
+    private void clickOnDateInput(LocationType locationType, String destination) {
+        switch (locationType) {
+            case DEPARTURE -> {
+                By locator = By.xpath("//input[@id = 'departure']");
+                check.isElementPresentByLocator(locator, 10);
+                click.clickOnEnabledElement(departureDateInput, 15);
+            }
+            case ARRIVAL -> {
+                By locator = By.xpath("//input[@id = 'return_date']");
+                check.isElementPresentByLocator(locator, 10);
+                click.clickOnEnabledElement(returnDateInput, 15);
+            }
+        }
+
+        log.info("{} date picker input has been clicked.", destination);
+    }
+
+    private void checkIfDatePickerWindowIsDisplayed(boolean shouldBeDisplayed, String destination) {
+        By datePickerWindowLocator = By.xpath("//div[@class = 'datepicker dropdown-menu' and contains(@style, 'block')]");
+        if (shouldBeDisplayed) {
+            check.isElementPresentByLocator(datePickerWindowLocator, 50, 15);
+
+            WebElement datePickerWindow = getWebDriver().getDriver().findElement(datePickerWindowLocator);
+            check.isElementDisplayed(datePickerWindow, 15);
+            log.info("{} date picker window has been displayed.", destination);
+        } else {
+            check.isNumberOfElementsEqualTo(datePickerWindowLocator, 0, 50, 15);
+            log.info("{} date picker has been closed.", destination);
+        }
+    }
+
+    private void clickOnDatePickerHeader(constants.Date date) {
+        int iterator = switch (date) {
+            case YEAR -> 2;
+            case MONTH -> 1;
+            default -> 0;
+        };
+
+        By datePickerWindowHeaderLocator = By.xpath("//div[@class = 'datepicker dropdown-menu' and contains(@style, 'block')]/div[contains(@style, 'block')]//th[@class = 'switch']");
+        for (int i = 0; i < iterator; i++) {
+            check.isNumberOfElementsEqualTo(datePickerWindowHeaderLocator, 1, 5);
+            WebElement datePickerWindowHeader = getWebDriver().getDriver().findElement(datePickerWindowHeaderLocator);
+            click.clickOnVisibleElement(datePickerWindowHeader, 15);
+
+            log.info("Date picker header has been clicked.");
+        }
+    }
+
+    private void selectSpecificDate(LandingPageModel landingPageModel, LocationType locationType, constants.Date date) {
+        Date expectedDate = getExpectedDateFromDataProvider(landingPageModel, locationType);
+
+        String specificDate = switch (date) {
+            case YEAR -> expectedDate.getYear();
+            case MONTH -> expectedDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
+            case DAY -> {
+                String day = expectedDate.getDay();
+                yield (day.length() == 2 && day.startsWith("0")) ? day.substring(1) : day;
+            }
+        };
+
+        By dateLocator = switch (date) {
+            case YEAR, MONTH ->
+                    By.xpath("//div[@class = 'datepicker dropdown-menu' and contains(@style, 'block')]/div[contains(@style, 'block')]//tbody//span[text() = '" + specificDate + "']");
+            case DAY ->
+                    By.xpath("//div[@class = 'datepicker dropdown-menu' and contains(@style, 'block')]/div[contains(@style, 'block')]//tbody//td[@class = 'day ' and text() = '" + specificDate + "']");
+        };
+
+        WebElement dateButton = getWebDriver().getDriver().findElement(dateLocator);
+        click.clickOnVisibleElement(dateButton, 15);
+        log.info("Departure date: {} {} has been clicked.", date.getName(), specificDate);
+    }
+
+    public void selectPassengersNumber() {
+
+    }
+
+
     public void clickOnSearchButton() {
         //TODO: Zrób to
     }
 
-    private void selectSpecificFlightDestiny(LandingPageModel landingPageModel) {
-        String expectedFlightDestinyValue = getExpectedFlightDestinyFromDataProvider(landingPageModel);
-        Select flightDestinySelect = new Select(this.flightDestinySelect);
-        flightDestinySelect.selectByContainsVisibleText(expectedFlightDestinyValue);
+    private void checkDepartureLocationBeforeInput() {
+        compareLocationBeforeOrAfterInput("", departureLocationInput, "Departure", "before");
+    }
+
+    private void checkArrivalLocationBeforeInput() {
+        compareLocationBeforeOrAfterInput("", arrivalLocationInput, "Arrival", "before");
+    }
+
+    private void checkDepartureLocationAfterInput(LandingPageModel landingPageModel) {
+        String expectedDepartureLocation = getExpectedLocationValueAfterInput(landingPageModel, LocationType.DEPARTURE);
+        compareLocationBeforeOrAfterInput(expectedDepartureLocation, departureLocationInput, "Departure", "after");
+    }
+
+    private void checkArrivalLocationAfterInput(LandingPageModel landingPageModel) {
+        String expectedArrivalLocation = getExpectedLocationValueAfterInput(landingPageModel, LocationType.ARRIVAL);
+        compareLocationBeforeOrAfterInput(expectedArrivalLocation, arrivalLocationInput, "Arrival", "after");
+    }
+
+    private void compareLocationBeforeOrAfterInput(String expectedLocationValue, WebElement element, String destination, String inputStage) {
+        String actualLocationValue = get.getValueFromElement(element);
+
+        assertThat(actualLocationValue)
+                .isEqualTo(expectedLocationValue)
+                .as("{} location check {} input", destination, inputStage);
+
+        log.info("{} location {} input value meets expected value.", destination, inputStage);
+    }
+
+    private String getExpectedLocationValueAfterInput(LandingPageModel landingPageModel, LocationType locationType) {
+        String expectedLocationCode;
+        String expectedLocationName;
+
+        switch (locationType) {
+            case DEPARTURE -> {
+                expectedLocationCode = getExpectedDepartureLocationFromDataProvider(landingPageModel).getAirportCode();
+                expectedLocationName = getExpectedDepartureLocationFromDataProvider(landingPageModel).getAirportName();
+
+                return expectedLocationCode.concat(" - ").concat(expectedLocationName);
+            }
+
+            case ARRIVAL -> {
+                expectedLocationCode = getExpectedArrivalLocationFromDataProvider(landingPageModel).getAirportCode();
+                expectedLocationName = getExpectedArrivalLocationFromDataProvider(landingPageModel).getAirportName();
+
+                return expectedLocationCode.concat(" - ").concat(expectedLocationName);
+            }
+
+            default -> {
+                return null;
+            }
+        }
+    }
+
+    private void selectSpecificFlightDestination(LandingPageModel landingPageModel) {
+        String expectedFlightDestinationValue = getExpectedFlightDestinationFromDataProvider(landingPageModel);
+        Select flightDestinationSelect = new Select(this.flightDestinationSelect);
+        flightDestinationSelect.selectByContainsVisibleText(expectedFlightDestinationValue);
     }
 
     private void selectSpecificCabinClass(LandingPageModel landingPageModel) {
@@ -72,13 +329,13 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
     }
 
     private void compareFlightDestinies(LandingPageModel landingPageModel) {
-        String expectedFlightDestinyValue = getExpectedFlightDestinyFromDataProvider(landingPageModel);
+        String expectedFlightDestinationValue = getExpectedFlightDestinationFromDataProvider(landingPageModel);
 
-        Select flightDestinySelect = new Select(this.flightDestinySelect);
-        String actualFlightDestinyValue = get.getTextFromElement(flightDestinySelect.getFirstSelectedOption());
-        assertThat(actualFlightDestinyValue).isEqualTo(expectedFlightDestinyValue).as("Flight destiny value check");
+        Select flightDestinationSelect = new Select(this.flightDestinationSelect);
+        String actualFlightDestinationValue = get.getTextFromElement(flightDestinationSelect.getFirstSelectedOption());
+        assertThat(actualFlightDestinationValue).isEqualTo(expectedFlightDestinationValue).as("Flight destination value check");
 
-        log.info("Selected flight destiny value: " + actualFlightDestinyValue);
+        log.info("Selected flight destination value: " + actualFlightDestinationValue);
     }
 
     private void compareCabinClasses(LandingPageModel landingPageModel) {
@@ -103,13 +360,13 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
         clickOnSpecificLocation(location, expectedArrivalLocation, "arrival");
     }
 
-    private void clickOnSpecificLocation(WebElement locationInput, Location location, String destiny) {
+    private void clickOnSpecificLocation(WebElement locationInput, Location location, String destination) {
         String airportName = location.getAirportName();
         String airportCity = location.getAirportCity();
         String airportCountry = location.getAirportCountry();
 
         click.clickOnElement(locationInput, 15);
-        log.info("{}, {}, {} has been set as {} location.", airportName, airportCity, airportCountry, destiny);
+        log.info("{}, {}, {} has been set as {} location.", airportName, airportCity, airportCountry, destination);
     }
 
     private void checkDepartureLocationsAvailability(LandingPageModel landingPageModel) {
@@ -222,9 +479,9 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
         clickOnLocationInput(arrivalLocationInput, "Arrival");
     }
 
-    private void clickOnLocationInput(WebElement location, String locationDestiny) {
+    private void clickOnLocationInput(WebElement location, String locationDestination) {
         click.clickOnEnabledElement(location, 15);
-        log.info(locationDestiny + " input has been clicked.");
+        log.info(locationDestination + " input has been clicked.");
     }
 
     private void checkIfDepartureAirportsAreDisplayed() {
@@ -241,20 +498,6 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
         check.isNumberOfElementsGreaterThan(departureAirportLocator, 0, 50, 10);
     }
 
-    public void swapDepartureAndArrivalLocations() {
-
-    }
-
-    public void selectDepartureDate() {
-
-    }
-
-    public void selectReturnDate() {
-
-    }
-
-    public void selectPassengersNumber() {
-    }
 
     private Location getExpectedDepartureLocationFromDataProvider(LandingPageModel landingPageModel) {
         return landingPageModel.getExpectedDepartureLocation();
@@ -272,8 +515,8 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
         return landingPageModel.getExpectedArrivalLocations();
     }
 
-    private String getExpectedFlightDestinyFromDataProvider(LandingPageModel landingPageModel) {
-        return landingPageModel.getExpectedFlightDestiny().getFlightDestiny();
+    private String getExpectedFlightDestinationFromDataProvider(LandingPageModel landingPageModel) {
+        return landingPageModel.getExpectedFlightDestination().getFlightDestination();
     }
 
     private String getExpectedCabinClassFromDataProvider(LandingPageModel landingPageModel) {
