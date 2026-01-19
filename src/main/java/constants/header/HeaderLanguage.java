@@ -1,6 +1,9 @@
-package constants;
+package constants.header;
 
-public enum Language {
+import lombok.Getter;
+
+@Getter
+public enum HeaderLanguage {
     EN("English"),
     AR("Arabic"),
     TR("Turkish"),
@@ -9,13 +12,9 @@ public enum Language {
     ZH("Chinese"),
     DE("Germany");
 
-    private String language;
+    private final String language;
 
-    Language(String language) {
+    HeaderLanguage(String language) {
         this.language = language;
-    }
-
-    public String getLanguage() {
-        return language;
     }
 }

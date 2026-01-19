@@ -5,8 +5,8 @@ import models.desktop.landingPage.searchBarFlights.SearchBarFlights;
 import models.desktop.landingPage.searchBarHotels.SearchBarHotels;
 import models.desktop.landingPage.searchBarTours.SearchBarTours;
 import models.desktop.landingPage.searchBarVisa.SearchBarVisa;
-import org.testng.Assert;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static utils.logger.Log4J.log;
 
 public class LandingPage extends LandingPageLocators {
@@ -58,7 +58,9 @@ public class LandingPage extends LandingPageLocators {
         String expectedUrl = "https://phptravels.net/";
         String actualUrl = get.getCurrentUrl();
 
-        Assert.assertEquals(actualUrl, expectedUrl, "URL mismatch.");
+        assertThat(actualUrl)
+                .as("URL check")
+                .isEqualTo(expectedUrl);
     }
 
     private void hideAd() {

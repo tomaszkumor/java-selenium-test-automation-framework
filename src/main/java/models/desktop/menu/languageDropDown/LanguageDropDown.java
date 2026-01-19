@@ -1,6 +1,6 @@
 package models.desktop.menu.languageDropDown;
 
-import constants.Language;
+import constants.header.HeaderLanguage;
 import dataProviders.dataProvidersModels.landingPageModels.LandingPageModel;
 import io.qameta.allure.Step;
 import models.desktop.landingPage.LandingPage;
@@ -32,58 +32,58 @@ public class LanguageDropDown extends LanguageDropDownLocators {
 
     @Step("Click on english language")
     public LandingPage selectEnglish() {
-        selectLanguage(Language.EN);
+        selectLanguage(HeaderLanguage.EN);
 
         return new LandingPage();
     }
 
     @Step("Click on arabic language")
     public LandingPage selectArabic() {
-        selectLanguage(Language.AR);
+        selectLanguage(HeaderLanguage.AR);
 
         return new LandingPage();
     }
 
     @Step("Click on turkish language")
     public LandingPage selectTurkish() {
-        selectLanguage(Language.TR);
+        selectLanguage(HeaderLanguage.TR);
 
         return new LandingPage();
     }
 
     @Step("Click on russian language")
     public LandingPage selectRussian() {
-        selectLanguage(Language.RU);
+        selectLanguage(HeaderLanguage.RU);
 
         return new LandingPage();
     }
 
     @Step("Click on french language")
     public LandingPage selectFrench() {
-        selectLanguage(Language.FR);
+        selectLanguage(HeaderLanguage.FR);
 
         return new LandingPage();
     }
 
     @Step("Click on chinese language")
     public LandingPage selectChinese() {
-        selectLanguage(Language.ZH);
+        selectLanguage(HeaderLanguage.ZH);
 
         return new LandingPage();
     }
 
     @Step("Click on german language")
     public LandingPage selectGerman() {
-        selectLanguage(Language.DE);
+        selectLanguage(HeaderLanguage.DE);
 
         return new LandingPage();
     }
 
     private void compareLanguages(List<String> actualLanguages, List<String> expectedLanguages) {
         assertThat(actualLanguages)
+                .as("Languages check")
                 .containsExactlyInAnyOrderElementsOf(expectedLanguages)
-                .doesNotHaveDuplicates()
-                .as("Languages check");
+                .doesNotHaveDuplicates();
     }
 
     private List<String> getActualLanguages() {
@@ -99,19 +99,19 @@ public class LanguageDropDown extends LanguageDropDownLocators {
     }
 
     private List<String> getExpectedLanguages(LandingPageModel landingPageModel) {
-        List<Language> expectedLanguagesA = getExpectedLanguagesFromDataProvider(landingPageModel);
+        List<HeaderLanguage> expectedLanguagesA = getExpectedLanguagesFromDataProvider(landingPageModel);
 
-        return expectedLanguagesA.stream().map(Language::getLanguage).toList();
+        return expectedLanguagesA.stream().map(HeaderLanguage::getLanguage).toList();
     }
 
-    private void selectLanguage(Language language) {
+    private void selectLanguage(HeaderLanguage language) {
         WebElement languageButton = getLanguageButton(language);
         String languageName = language.getLanguage();
         click.clickOnVisibleElement(languageButton, 10);
         log.info(languageName + " language button has been clicked.");
     }
 
-    private WebElement getLanguageButton(Language language) {
+    private WebElement getLanguageButton(HeaderLanguage language) {
         return switch (language) {
             case EN -> englishLanguageButton;
             case AR -> arabicLanguageButton;
@@ -123,7 +123,7 @@ public class LanguageDropDown extends LanguageDropDownLocators {
         };
     }
 
-    private List<Language> getExpectedLanguagesFromDataProvider(LandingPageModel landingPageModel) {
+    private List<HeaderLanguage> getExpectedLanguagesFromDataProvider(LandingPageModel landingPageModel) {
         return landingPageModel.getLanguages();
     }
 

@@ -1,6 +1,6 @@
-package dataProviders.dataProvidersModels;
+package dataProviders.dataProvidersModels.landingPageModels;
 
-import constants.Location;
+import constants.landingPage.Location;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

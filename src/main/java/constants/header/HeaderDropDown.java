@@ -1,6 +1,10 @@
 package constants.header;
 
+import lombok.Getter;
+
+@Getter
 public enum HeaderDropDown {
+//    SEARCHES("Searches"),
     LANGUAGE("Language"),
     CURRENCY("Currency"),
     AGENTS("Agents"),
@@ -10,9 +14,5 @@ public enum HeaderDropDown {
 
     HeaderDropDown(String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 }

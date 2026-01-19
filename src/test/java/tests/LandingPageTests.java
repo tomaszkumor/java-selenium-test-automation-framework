@@ -9,13 +9,18 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 @Listeners(value = {DriverListener.class})
-public class KlasaTestowa extends BaseTest {
-    @Test(dataProvider = "landingPageTest", dataProviderClass = LandingPageDP.class)
-    public void metoda(LandingPageModel landingPageModel) {
+public class LandingPageTests extends BaseTest {
+    @Test(dataProvider = "searchForFlights", dataProviderClass = LandingPageDP.class)
+    public void searchForFlights(LandingPageModel landingPageModel) {
         new LandingPage()
                 .clickOnFlightsTab()
                 .selectFlightDestination(landingPageModel)
+                .selectCabinClass(landingPageModel)
+                .selectDepartureLocation(landingPageModel)
+                .selectArrivalLocation(landingPageModel)
                 .selectDepartureDate(landingPageModel)
-                .selectReturnDate(landingPageModel);
+                .selectReturnDate(landingPageModel)
+                .selectTravellers(landingPageModel)
+                .clickOnSearchButton();
     }
 }

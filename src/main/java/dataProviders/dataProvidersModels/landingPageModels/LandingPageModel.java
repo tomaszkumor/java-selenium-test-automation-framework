@@ -1,11 +1,9 @@
 package dataProviders.dataProvidersModels.landingPageModels;
 
-import constants.CabinClass;
-import constants.FlightDestination;
-import constants.Language;
-import constants.Location;
-import dataProviders.dataProvidersModels.Airport;
-import dataProviders.dataProvidersModels.Date;
+import constants.landingPage.CabinClass;
+import constants.landingPage.FlightDestination;
+import constants.header.HeaderLanguage;
+import constants.landingPage.Location;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,7 +12,7 @@ import java.util.List;
 @Data
 @Builder
 public class LandingPageModel {
-    private List<Language> languages;
+    private List<HeaderLanguage> languages;
     private Location expectedDepartureLocation;
     private Location expectedArrivalLocation;
     private List<Airport> expectedDepartureLocations;
@@ -23,5 +21,6 @@ public class LandingPageModel {
     private CabinClass expectedCabinClass;
     private Date expectedDepartureDate;
     private Date expectedReturnDate;
+    private Traveller expectedTravellers;
 
 }

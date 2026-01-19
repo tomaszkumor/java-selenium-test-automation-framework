@@ -1,4 +1,4 @@
-package constants;
+package constants.landingPage;
 
 import lombok.Getter;
 
@@ -18,10 +18,10 @@ public enum Location {
     KUALA_LUMPUR("Kuala Lumpur International Airport", "Kuala Lumpur", "Malaysia", "KUL"),
     PHUKET("Phuket International Airport", "Phuket", "Thailand", "HKT");
 
-    private String airportName;
-    private String airportCity;
-    private String airportCountry;
-    private String airportCode;
+    private final String airportName;
+    private final String airportCity;
+    private final String airportCountry;
+    private final String airportCode;
 
     Location(String airportName, String airportCity, String airportCountry, String airportCode) {
         this.airportName = airportName;

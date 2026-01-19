@@ -1,4 +1,4 @@
-package constants;
+package constants.landingPage;
 
 import lombok.Getter;
 
@@ -9,7 +9,7 @@ public enum CabinClass {
     BUSINESS("Business"),
     FIRST("First");
 
-    private String cabinClass;
+    private final String cabinClass;
 
     CabinClass(String cabinClass) {
         this.cabinClass = cabinClass;

@@ -1,4 +1,4 @@
-package dataProviders.dataProvidersModels;
+package dataProviders.dataProvidersModels.landingPageModels;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

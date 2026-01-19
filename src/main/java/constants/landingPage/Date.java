@@ -1,4 +1,4 @@
-package constants;
+package constants.landingPage;
 
 import lombok.Getter;
 
@@ -8,7 +8,7 @@ public enum Date {
     MONTH("month"),
     DAY("day");
 
-    private String name;
+    private final String name;
 
     Date(String name) {
         this.name = name;

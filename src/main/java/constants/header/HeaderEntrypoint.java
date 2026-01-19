@@ -1,5 +1,8 @@
 package constants.header;
 
+import lombok.Getter;
+
+@Getter
 public enum HeaderEntrypoint {
     LANDING_PAGE("Landing page"),
     FLIGHTS("Flights"),
@@ -13,9 +16,5 @@ public enum HeaderEntrypoint {
 
     HeaderEntrypoint(String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 }

@@ -16,10 +16,11 @@ import models.desktop.menu.toursPage.ToursPage;
 import models.desktop.menu.visaPage.VisaPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static utils.logger.Log4J.log;
-//TODO: Dodaj DropDown Searches (po wyszukaniu lotu to jest taka historia)
+
+//TODO: Dodaj DropDown Searches (po wyszukaniu lotu to jest taka historia). Wprowadz roznicowanie elementow tablicy, w zaleznosci od ich ilosci
 public class NavigationHeaderAndFooter extends NavigationHeaderAndFooterLocators {
     @Step("Click on Landing page button")
     public LandingPage clickOnLandingPageButton() {
@@ -70,6 +71,13 @@ public class NavigationHeaderAndFooter extends NavigationHeaderAndFooterLocators
         return new BlogsPage();
     }
 
+    @Step("Click on Searches drop down button")
+    public void clickOnSearchesDropDown() {
+//        clickOnDropDownButton(HeaderDropDown.SEARCHES, languageButton);
+
+//        return new SearchesDropDown();
+    }
+
     @Step("Click on Languages drop down button")
     public LanguageDropDown clickOnLanguagesDropDown() {
         clickOnDropDownButton(HeaderDropDown.LANGUAGE, languageButton);
@@ -113,13 +121,21 @@ public class NavigationHeaderAndFooter extends NavigationHeaderAndFooterLocators
     private void waitUntilEntrypointIsPresent(HeaderEntrypoint entrypoint) {
         By entrypointLocator = getEntrypointLocator(entrypoint);
         String entrypointName = getEntrypointName(entrypoint);
-        Assert.assertTrue(check.isElementPresentByLocator(entrypointLocator, 10), entrypointName + " entrypoint not found.");
+        boolean isElementPresent = check.isElementPresentByLocator(entrypointLocator, 10);
+
+        assertThat(isElementPresent)
+                .as(entrypointName + " entrypoint presence check.")
+                .isTrue();
     }
 
     private void waitUntilDropDownButtonIsPresent(HeaderDropDown dropDown) {
         By dropDownButtonLocator = getDropDownButtonLocator(dropDown);
         String dropDownButtonName = getDropDownButtonName(dropDown);
-        Assert.assertTrue(check.isElementPresentByLocator(dropDownButtonLocator, 10), dropDownButtonName + " drop down button not found.");
+        boolean isElementPresent = check.isElementPresentByLocator(dropDownButtonLocator, 10);
+
+        assertThat(isElementPresent)
+                .as(dropDownButtonName + " drop down presence check.")
+                .isTrue();
     }
 
     private By getEntrypointLocator(HeaderEntrypoint entrypoint) {
