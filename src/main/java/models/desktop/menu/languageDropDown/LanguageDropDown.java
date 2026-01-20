@@ -1,7 +1,7 @@
 package models.desktop.menu.languageDropDown;
 
 import constants.header.HeaderLanguage;
-import dataProviders.dataProvidersModels.landingPageModels.LandingPageModel;
+import dataProviders.dataProvidersModels.phpTravelsModel.PhpTravelsModel;
 import io.qameta.allure.Step;
 import models.desktop.landingPage.LandingPage;
 import org.openqa.selenium.By;
@@ -22,9 +22,9 @@ public class LanguageDropDown extends LanguageDropDownLocators {
     }
 
     @Step("Check available languages")
-    public LanguageDropDown checkAvailableLanguages(LandingPageModel landingPageModel) {
+    public LanguageDropDown checkAvailableLanguages(PhpTravelsModel phpTravelsModel) {
         List<String> actualLanguages = getActualLanguages();
-        List<String> expectedLanguages = getExpectedLanguages(landingPageModel);
+        List<String> expectedLanguages = getExpectedLanguages(phpTravelsModel);
         compareLanguages(actualLanguages, expectedLanguages);
 
         return this;
@@ -98,8 +98,8 @@ public class LanguageDropDown extends LanguageDropDownLocators {
         return actualLanguages;
     }
 
-    private List<String> getExpectedLanguages(LandingPageModel landingPageModel) {
-        List<HeaderLanguage> expectedLanguagesA = getExpectedLanguagesFromDataProvider(landingPageModel);
+    private List<String> getExpectedLanguages(PhpTravelsModel phpTravelsModel) {
+        List<HeaderLanguage> expectedLanguagesA = getExpectedLanguagesFromDataProvider(phpTravelsModel);
 
         return expectedLanguagesA.stream().map(HeaderLanguage::getLanguage).toList();
     }
@@ -123,8 +123,7 @@ public class LanguageDropDown extends LanguageDropDownLocators {
         };
     }
 
-    private List<HeaderLanguage> getExpectedLanguagesFromDataProvider(LandingPageModel landingPageModel) {
-        return landingPageModel.getLanguages();
+    private List<HeaderLanguage> getExpectedLanguagesFromDataProvider(PhpTravelsModel phpTravelsModel) {
+        return phpTravelsModel.getLanguages();
     }
-
 }

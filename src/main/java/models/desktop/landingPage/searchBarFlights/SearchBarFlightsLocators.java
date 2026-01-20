@@ -29,9 +29,6 @@ public class SearchBarFlightsLocators extends BasePageFactory {
     WebElement travellersDropDown;
     @FindBy(xpath = "//button[@id = 'flights-search']")
     WebElement searchButton;
-
-
-
     @FindBy(xpath = "//div[contains(@class, 'results-container-from')]/div")
     List<WebElement> departureLocations;
     @FindBy(xpath = "//div[contains(@class, 'results-container-from')]")
@@ -40,12 +37,4 @@ public class SearchBarFlightsLocators extends BasePageFactory {
     List<WebElement> arrivalLocations;
     @FindBy(xpath = "//div[contains(@class, 'results-container-to')]")
     WebElement arrivalLocationsContainer;
-    @FindBy(xpath = "//span[@class = 'guest_flights']/ancestor::a/following-sibling::div")
-    WebElement travellersContainer;
-    @FindBy(xpath = "//div[contains(@class, 'adult_qty')]")
-    WebElement adultsTravellersBar;
-    @FindBy(xpath = "//div[contains(@class, 'child_qty')]")
-    WebElement childrenTravellersBar;
-    @FindBy(xpath = "//div[contains(@class, 'dropdown-item infant_qty')]")
-    WebElement infantsTravellersBar;
 }

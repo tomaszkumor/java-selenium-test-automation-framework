@@ -25,6 +25,19 @@ public class SendActions extends BaseActions {
     }
 
     @SneakyThrows
+    public void sendKeysToWebElementWithNoLeave(WebElement element, String text) {
+        new WebDriverWait(getWebDriver().getDriver(), Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOf(element));
+
+        try {
+            element.clear();
+            element.sendKeys(text);
+        } catch (Exception e) {
+            throw new Exception("Unable to send keys to element: " + e.getMessage());
+        }
+    }
+
+    @SneakyThrows
     public void sendKeysToInvisibleWebElement(WebElement element, String text) {
         try {
             element.sendKeys(text);

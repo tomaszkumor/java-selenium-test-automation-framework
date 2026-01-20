@@ -1,4 +1,4 @@
-package dataProviders.dataProvidersModels.landingPageModels;
+package dataProviders.dataProvidersModels.commonModels;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.time.Month;
 
 @Data
 @AllArgsConstructor
-public class Date {
+public class DateModel {
     private String year;
     private Month month;
     private String day;

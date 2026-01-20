@@ -1,4 +1,4 @@
-package constants.landingPage;
+package constants.common;
 
 import lombok.Getter;
 
