@@ -9,6 +9,7 @@ public class TestConfig {
         String environment = config.getProperty("environment");
         config.loadFileSettings(PROPERTIES_PATH + "settings/" + String.format("%sSettings.yaml", environment.toUpperCase()));
         config.loadFileSettings(PROPERTIES_PATH + "users/" + String.format("%sUsers.yaml", environment.toUpperCase()));
+        config.loadFileSettings(PROPERTIES_PATH + "filesPaths/" + String.format("%sFilesPaths.yaml", environment.toUpperCase()));
 
         return config;
     }
