@@ -1,0 +1,19 @@
+package dataProviders.dataProvidersModels.web.phpTravelsModel;
+
+import constants.header.HeaderLanguage;
+import dataProviders.dataProvidersModels.web.flightsPageModels.FlightsPageModel;
+import dataProviders.dataProvidersModels.web.hotelsPageModels.HotelsPageModel;
+import dataProviders.dataProvidersModels.web.toursPageModels.ToursPageModel;
+import lombok.Builder;
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+@Builder
+public class PhpTravelsModel {
+    private List<HeaderLanguage> languages;
+    private FlightsPageModel flightsPageModel;
+    private HotelsPageModel hotelsPageModel;
+    private ToursPageModel toursPageModel;
+}

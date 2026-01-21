@@ -1,6 +1,0 @@
-package models.desktop.landingPage.searchBarVisa;
-
-import basePageFactory.BasePageFactory;
-
-public class SearchBarVisaLocators extends BasePageFactory {
-}
