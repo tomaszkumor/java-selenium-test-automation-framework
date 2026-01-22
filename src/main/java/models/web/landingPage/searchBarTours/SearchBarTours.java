@@ -51,8 +51,8 @@ public class SearchBarTours extends SearchBarToursLocators {
         setAdultsNumber(phpTravelsModel);
         setChildrenNumber(phpTravelsModel);
         closeTravellersWindow();
-//        checkIfTravellersWindowIsDisplayed(false);
-//        checkTravellersCountAfterChange(phpTravelsModel);
+        checkIfTravellersWindowIsDisplayed(false);
+        checkTravellersCountAfterChange(phpTravelsModel);
 
         return this;
     }

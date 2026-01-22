@@ -2,7 +2,8 @@ package dataProviders.dataProvidersModels.web.flightsPageModels;
 
 import constants.flightsPage.CabinClass;
 import constants.flightsPage.FlightDestination;
-import constants.flightsPage.Location;
+import constants.common.Location;
+import dataProviders.dataProvidersModels.web.commonModels.AirportModel;
 import dataProviders.dataProvidersModels.web.commonModels.DateModel;
 import dataProviders.dataProvidersModels.web.commonModels.TravellerModel;
 import lombok.Builder;

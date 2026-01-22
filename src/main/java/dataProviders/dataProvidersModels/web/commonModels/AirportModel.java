@@ -1,6 +1,6 @@
-package dataProviders.dataProvidersModels.web.flightsPageModels;
+package dataProviders.dataProvidersModels.web.commonModels;
 
-import constants.flightsPage.Location;
+import constants.common.Location;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

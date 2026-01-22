@@ -1,4 +1,4 @@
-package constants.flightsPage;
+package constants.common;
 
 import lombok.Getter;
 

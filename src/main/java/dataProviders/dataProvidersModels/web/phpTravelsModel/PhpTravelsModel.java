@@ -1,6 +1,7 @@
 package dataProviders.dataProvidersModels.web.phpTravelsModel;
 
 import constants.header.HeaderLanguage;
+import dataProviders.dataProvidersModels.web.carsPageModels.CarsPageModel;
 import dataProviders.dataProvidersModels.web.flightsPageModels.FlightsPageModel;
 import dataProviders.dataProvidersModels.web.hotelsPageModels.HotelsPageModel;
 import dataProviders.dataProvidersModels.web.toursPageModels.ToursPageModel;
@@ -16,4 +17,5 @@ public class PhpTravelsModel {
     private FlightsPageModel flightsPageModel;
     private HotelsPageModel hotelsPageModel;
     private ToursPageModel toursPageModel;
+    private CarsPageModel carsPageModel;
 }

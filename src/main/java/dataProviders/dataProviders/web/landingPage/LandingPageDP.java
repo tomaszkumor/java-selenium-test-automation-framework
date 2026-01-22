@@ -2,10 +2,12 @@ package dataProviders.dataProviders.web.landingPage;
 
 import constants.flightsPage.CabinClass;
 import constants.flightsPage.FlightDestination;
-import constants.flightsPage.Location;
+import constants.common.Location;
 import constants.header.HeaderLanguage;
+import dataProviders.dataProvidersModels.web.carsPageModels.CarsPageModel;
+import dataProviders.dataProvidersModels.web.carsPageModels.TimeModel;
 import dataProviders.dataProvidersModels.web.commonModels.DateModel;
-import dataProviders.dataProvidersModels.web.flightsPageModels.AirportModel;
+import dataProviders.dataProvidersModels.web.commonModels.AirportModel;
 import dataProviders.dataProvidersModels.web.flightsPageModels.FlightsPageModel;
 import dataProviders.dataProvidersModels.web.commonModels.TravellerModel;
 import dataProviders.dataProvidersModels.web.hotelsPageModels.AccommodationModel;
@@ -80,6 +82,25 @@ public class LandingPageDP {
                                 .expectedDestination(new DestinationModel("Warsaw", "Poland"))
                                 .expectedDate(new DateModel("2026", Month.JULY, "27"))
                                 .expectedTravellers(new TravellerModel("3", "3", "0"))
+                                .build())
+                        .build()
+                }
+        };
+    }
+
+    @DataProvider
+    Object[][] searchForCars() {
+        return new Object[][]{
+                {PhpTravelsModel.builder()
+                        .carsPageModel(CarsPageModel
+                                .builder()
+                                .expectedDepartureAirport(new AirportModel("Warsaw Chopin Airport", "Warsaw", "Poland", "WAW"))
+                                .expectedArrivalCity(new DestinationModel("Prague", "Czech Republic"))
+                                .expectedPickUpDate(new DateModel("2026", Month.JUNE, "17"))
+                                .expectedPickUpTime(new TimeModel("10","30", "AM"))
+                                .expectedDropOffDate(new DateModel("2026", Month.JUNE, "30"))
+                                .expectedDropOffTime(new TimeModel("14","00", "PM"))
+                                .expectedTravellers(new TravellerModel("2", "1", "0"))
                                 .build())
                         .build()
                 }
