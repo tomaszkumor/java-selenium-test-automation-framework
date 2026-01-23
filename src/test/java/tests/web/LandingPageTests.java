@@ -7,10 +7,11 @@ import listeners.DriverListener;
 import models.web.landingPage.LandingPage;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import utils.retryAnalyzer.RetryAnalyzer;
 
 @Listeners(value = {DriverListener.class})
 public class LandingPageTests extends BaseTest {
-    @Test(dataProvider = "searchForFlights", dataProviderClass = LandingPageDP.class)
+    @Test(dataProvider = "searchForFlights", dataProviderClass = LandingPageDP.class, retryAnalyzer = RetryAnalyzer.class)
     public void searchForFlights(PhpTravelsModel phpTravelsModel) {
         new LandingPage()
                 .clickOnFlightsTab()
@@ -24,7 +25,7 @@ public class LandingPageTests extends BaseTest {
                 .clickOnSearchButton();
     }
 
-    @Test(dataProvider = "searchForHotels", dataProviderClass = LandingPageDP.class)
+    @Test(dataProvider = "searchForHotels", dataProviderClass = LandingPageDP.class, retryAnalyzer = RetryAnalyzer.class)
     public void searchForHotels(PhpTravelsModel phpTravelsModel) {
         new LandingPage()
                 .clickOnHotelsTab()
@@ -35,7 +36,7 @@ public class LandingPageTests extends BaseTest {
                 .clickOnSearchButton();
     }
 
-    @Test(dataProvider = "searchForTours", dataProviderClass = LandingPageDP.class)
+    @Test(dataProvider = "searchForTours", dataProviderClass = LandingPageDP.class, retryAnalyzer = RetryAnalyzer.class)
     public void searchForTours(PhpTravelsModel phpTravelsModel) {
         new LandingPage()
                 .clickOnToursTab()
@@ -45,7 +46,7 @@ public class LandingPageTests extends BaseTest {
                 .clickOnSearchButton();
     }
 
-    @Test(dataProvider = "searchForCars", dataProviderClass = LandingPageDP.class)
+    @Test(dataProvider = "searchForCars", dataProviderClass = LandingPageDP.class, retryAnalyzer = RetryAnalyzer.class)
     public void searchForCars(PhpTravelsModel phpTravelsModel) {
         new LandingPage()
                 .clickOnCarsTab()
@@ -59,7 +60,7 @@ public class LandingPageTests extends BaseTest {
                 .clickOnSearchButton();
     }
 
-    @Test(dataProvider = "searchForVisa", dataProviderClass = LandingPageDP.class)
+    @Test(dataProvider = "searchForVisa", dataProviderClass = LandingPageDP.class, retryAnalyzer = RetryAnalyzer.class)
     public void searchForVisa(PhpTravelsModel phpTravelsModel) {
         new LandingPage()
                 .clickOnVisaTab()

@@ -73,8 +73,6 @@ public class EndpointUser {
         response = given()
                 .spec(requestSpecification)
                 .pathParam("userName", userName)
-                .log()
-                .all()
                 .get(requestEndpointUrl);
 
         checkRequestStatus(response);
@@ -93,8 +91,6 @@ public class EndpointUser {
                 .spec(requestSpecification)
                 .pathParam("userName", userName)
                 .body(requestBody)
-                .log()
-                .all()
                 .put(requestEndpointUrl);
 
         checkRequestStatus(response);
