@@ -43,7 +43,6 @@ public class ThemesModal extends ThemesModalLocators {
     @Step("Close themes modal")
     public SettingsPage closeThemesModal() {
         TipKiller.closeThemesModal(themesHeader);
-//TODO: wolno to sprawdza, zobacz czemu
         return new SettingsPage();
     }
 }

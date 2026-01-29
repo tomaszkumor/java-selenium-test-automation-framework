@@ -177,7 +177,4 @@ public class TipKiller extends BasePageFactory {
             default -> null;
         };
     }
-
-    //TODO: ogarnij plik readme
-    //TODO: zrob projekt publicznym
 }
