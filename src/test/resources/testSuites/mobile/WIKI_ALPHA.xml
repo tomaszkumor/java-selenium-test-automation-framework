@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Mobile: Wikipedia Alpha test suite" thread-count="1" parallel="tests">
+    <test name="Basic test suite" thread-count="1" parallel="methods" verbose="1">
+        <classes>
+            <class name="tests.mobile.WikiAlphaTests">
+                <methods>
+                    <include name="completeOnboardingProcessWithNewLanguageSelection"/>
+                    <include name="completeYearInReviewOnboardingProcess"/>
+                    <include name="changeThemeToDarkMode"/>
+                    <include name="searchThroughDiscoveryPageAndAddResultToSaved"/>
+                    <include name="checkIfSpecificResultsWereAddedToListInSavedPage"/>
+                    <include name="searchThroughSearchPageAndFindItemInContents"/>
+                    <include name="getThroughDiscoverMadeForYou"/>
+                    <include name="changeDiscoverMadeForYouSettings"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

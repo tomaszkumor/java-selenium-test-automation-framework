@@ -120,15 +120,7 @@ public class GetActions extends BaseActions {
 
     @SneakyThrows
     public WebElement getWebElementIfElementIsPresentByLocator(By locator, int duration) {
-        implicitlyWaitChangeDuration(0);
-        try {
-            WebDriverWait wait = new WebDriverWait(getWebDriver().getDriver(), Duration.ofSeconds(duration));
-            return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-        } catch (TimeoutException e) {
-            throw new Exception("Unable to get WebElement located as '" + locator + "': " + e.getMessage());
-        } finally {
-            setDefaultImplicitlyWait();
-        }
+        return getWebElementIfElementIsPresentByLocator(locator, 500, duration);
     }
 
     @SneakyThrows

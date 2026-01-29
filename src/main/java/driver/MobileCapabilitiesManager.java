@@ -5,9 +5,12 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.options.XCUITestOptions;
 
 import java.io.File;
+import java.time.Duration;
 
 public class MobileCapabilitiesManager {
     public UiAutomator2Options setAndroidCapabilities() {
+        String applicationPackage = TestStackProperties.getApplicationPackage();
+        String applicationActivity = TestStackProperties.getApplicationActivity();
         File app = new File(TestStackProperties.getAndroidPath());
         UiAutomator2Options options = new UiAutomator2Options()
                 .setApp(app.getAbsolutePath())
@@ -16,7 +19,14 @@ public class MobileCapabilitiesManager {
                 .setDeviceName("Pixel 8")
                 .setLanguage("PL")
                 .setLocale("PL")
-                .setAutoGrantPermissions(true);
+                .setUdid("R58N6235FSP")
+                .setAppPackage(applicationPackage)
+                .setAppActivity(applicationActivity)
+                .setNoReset(true)
+                .setAutoGrantPermissions(true)
+                .setNewCommandTimeout(Duration.ofSeconds(300))
+                .setUiautomator2ServerInstallTimeout(Duration.ofSeconds(120))
+                .setUiautomator2ServerLaunchTimeout(Duration.ofSeconds(120));
 
         options.setCapability("autoAcceptsAlerts", true);
 
@@ -24,6 +34,7 @@ public class MobileCapabilitiesManager {
     }
 
     public XCUITestOptions setIOSCapabilities() {
+        String applicationPackage = TestStackProperties.getApplicationPackage();
         File app = new File(TestStackProperties.getIosPath());
         XCUITestOptions options = new XCUITestOptions()
                 .setApp(app.getAbsolutePath())
@@ -33,6 +44,7 @@ public class MobileCapabilitiesManager {
                 .setLanguage("PL")
                 .setLocale("PL")
                 .setUdid("id")
+                .setBundleId(applicationPackage)
                 .autoAcceptAlerts()
                 .setAutoAcceptAlerts(true)
                 .setPlatformVersion("18.6");

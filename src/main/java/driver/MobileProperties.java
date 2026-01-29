@@ -3,7 +3,7 @@ package driver;
 import static config.TestConfig.CONFIG;
 
 public class MobileProperties {
-    public static String getSystem() {
+    public static String getMobileSystem() {
         return CONFIG.getProperty("mobile.system").toLowerCase();
     }
 

@@ -459,10 +459,6 @@ public class CheckActions extends BaseActions {
         }
     }
 
-    public boolean didElementStopMoving(WebElement element, int duration) {
-        return didElementStopMoving(element, 500, duration);
-    }
-
     public boolean didElementStopMoving(WebElement element, int interval, int duration) {
         implicitlyWaitChangeDuration(0);
         try {

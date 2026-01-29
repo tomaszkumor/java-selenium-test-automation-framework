@@ -40,7 +40,7 @@ public class BaseDriver {
     }
 
     private void runMobileTests() {
-        String mobileSystem = MobileProperties.getSystem();
+        String mobileSystem = MobileProperties.getMobileSystem();
         switch (mobileSystem) {
             case "android" -> runMobileTestsOnAndroid();
             case "ios" -> runMobileTestsOnIOS();
@@ -63,7 +63,7 @@ public class BaseDriver {
     @SneakyThrows
     private void runMobileTestsOnAndroid() {
         UiAutomator2Options capabilitiesAndroid = new MobileCapabilitiesManager().setAndroidCapabilities();
-        AndroidDriver androidDriver = new AndroidDriver(new URL("http://xxx.x.x.x:xxx"), capabilitiesAndroid);
+        AndroidDriver androidDriver = new AndroidDriver(new URL("http://127.0.0.1:4723"), capabilitiesAndroid);
 
         DRIVER_THREAD_LOCAL.set(androidDriver);
         log.info("Android driver on local environment has been set.");
@@ -72,7 +72,7 @@ public class BaseDriver {
     @SneakyThrows
     private void runMobileTestsOnIOS() {
         XCUITestOptions capabilitiesIOS = new MobileCapabilitiesManager().setIOSCapabilities();
-        IOSDriver iOSDriver = new IOSDriver(new URL("http://xxx.x.x.x:xxx"), capabilitiesIOS);
+        IOSDriver iOSDriver = new IOSDriver(new URL("http://127.0.0.1:4723"), capabilitiesIOS);
 
         DRIVER_THREAD_LOCAL.set(iOSDriver);
         log.info("iOS driver on local environment has been set.");
@@ -99,5 +99,13 @@ public class BaseDriver {
 
     public void unload() {
         DRIVER_THREAD_LOCAL.remove();
+    }
+
+    public static AndroidDriver getAndroidDriver() {
+        return ((AndroidDriver) getWebDriver().getDriver());
+    }
+
+    public static IOSDriver getIOSDriver() {
+        return ((IOSDriver) getWebDriver().getDriver());
     }
 }

@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import utils.retryAnalyzer.RetryAnalyzer;
 
 @Listeners(value = {DriverListener.class})
-public class LandingPageTests extends BaseTest {
+public class PhpTravelsTests extends BaseTest {
     @Test(dataProvider = "searchForFlights", dataProviderClass = LandingPageDP.class, retryAnalyzer = RetryAnalyzer.class)
     public void searchForFlights(PhpTravelsModel phpTravelsModel) {
         new LandingPage()

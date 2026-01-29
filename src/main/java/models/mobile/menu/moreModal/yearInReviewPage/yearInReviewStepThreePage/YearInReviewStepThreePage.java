@@ -1,0 +1,46 @@
+package models.mobile.menu.moreModal.yearInReviewPage.yearInReviewStepThreePage;
+
+import models.mobile.menu.moreModal.yearInReviewPage.yearInReviewStepFourPage.YearInReviewStepFourPage;
+import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.By;
+
+import static utils.logger.Log4J.log;
+
+public class YearInReviewStepThreePage extends YearInReviewStepThreePageLocators {
+    public YearInReviewStepThreePage() {
+        check.isElementDisplayed(donateButton, 15);
+        log.info("Year in review step three page is displayed.");
+    }
+
+    public YearInReviewStepThreePage checkDescription() {
+        By titleLocator = By.xpath("(//android.widget.ScrollView/android.widget.TextView)[1]");
+        check.isNumberOfElementsEqualTo(titleLocator, 1, 50, 15);
+
+        String actualTitle = get.getValueFromElement(title, "text");
+        String expectedTitle = "App users had 46 392 587 saved articles";
+
+        String actualDescription = get.getValueFromElement(description, "text");
+        String expectedDescription = "Adding articles to reading lists allows you to access articles even while offline. You can also log in to sync reading lists across devices.";
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(actualTitle).as("Title check").isEqualTo(expectedTitle);
+        softAssertions.assertThat(actualDescription).as("Description check").isEqualTo(expectedDescription);
+        softAssertions.assertAll();
+
+        return this;
+    }
+
+    public YearInReviewStepFourPage tapOnForwardButton() {
+        mobile.tapOnElement(forwardButton, 15);
+        log.info("Forward button has been tapped.");
+
+        return new YearInReviewStepFourPage();
+    }
+
+    public YearInReviewStepFourPage swipeToYearInReviewStepFourPage() {
+        mobile.swipeRight(600);
+        log.info("Swiped to 'Year in review step four' page.");
+
+        return new YearInReviewStepFourPage();
+    }
+}

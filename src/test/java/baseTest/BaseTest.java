@@ -4,7 +4,11 @@ import config.TestStackProperties;
 import driver.ApiProperties;
 import driver.MobileProperties;
 import driver.WebProperties;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
+import lombok.SneakyThrows;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 import java.time.Duration;
@@ -31,6 +35,15 @@ public class BaseTest {
         }
     }
 
+    @SneakyThrows
+    @BeforeClass
+    public void beforeClass() {
+        String framework = getFramework();
+        switch (framework) {
+            case "mobile" -> Runtime.getRuntime().exec("adb shell pm clear org.wikipedia.alpha");
+        }
+    }
+
     @AfterMethod
     public void afterMethod() {
         closeDriver();
@@ -49,6 +62,7 @@ public class BaseTest {
             }
             case "mobile" -> {
                 if (!MobileProperties.isDebugMode()) {
+                    terminateApplication();
                     terminateDriver();
                     log.info("Mobile driver has been terminated.");
                 } else {
@@ -60,6 +74,15 @@ public class BaseTest {
 
     private void terminateDriver() {
         getWebDriver().getDriver().quit();
+    }
+
+    private void terminateApplication() {
+        String applicationName = getApplicationName();
+        String mobileSystem = getMobileSystem();
+        switch (mobileSystem) {
+            case "android" -> ((AndroidDriver) getWebDriver().getDriver()).terminateApp(applicationName);
+            case "ios" -> ((IOSDriver) getWebDriver().getDriver()).terminateApp(applicationName);
+        }
     }
 
     private void runBrowserWithUrl() {
@@ -96,11 +119,11 @@ public class BaseTest {
     }
 
     private void logAllForMobile() {
-        String system = MobileProperties.getSystem().toLowerCase();
+        String system = MobileProperties.getMobileSystem();
         log.info("SYSTEM: " + system);
         log.info("DEBUG MODE: " + MobileProperties.isDebugMode());
 
-        switch(system) {
+        switch (system) {
             case "android" -> log.info("ANDROID PATH: " + TestStackProperties.getAndroidPath());
             case "ios" -> log.info("IOS PATH: " + TestStackProperties.getIosPath());
         }
@@ -108,5 +131,13 @@ public class BaseTest {
 
     private String getFramework() {
         return TestStackProperties.getFramework();
+    }
+
+    private String getMobileSystem() {
+        return MobileProperties.getMobileSystem();
+    }
+
+    private String getApplicationName() {
+        return TestStackProperties.getApplicationPackage();
     }
 }

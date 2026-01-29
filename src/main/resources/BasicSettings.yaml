@@ -2,14 +2,15 @@
 environment: ENV1
 
 # web / mobile / api
-framework: web
+framework: mobile
 
 web:
   grid: false
   debug: false
   headless: false
 mobile:
-  system: ios
+# android / ios
+  system: android
   debug: false
 api:
   debug: false
