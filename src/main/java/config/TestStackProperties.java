@@ -4,7 +4,7 @@ import static config.TestConfig.CONFIG;
 
 public class TestStackProperties {
     private static final String ENVIRONMENT = "environment";
-    private static final String FRAMEWORK = "framework";
+    private static final String PLATFORM = "platform";
     private static final String WEB_URL = "web_url";
     private static final String API_URL = "api_url";
     private static final String ANDROID_PATH = "android_path";
@@ -16,8 +16,8 @@ public class TestStackProperties {
         return CONFIG.getProperty(ENVIRONMENT);
     }
 
-    public static String getFramework() {
-        return CONFIG.getProperty(FRAMEWORK);
+    public static String getPlatform() {
+        return CONFIG.getProperty(PLATFORM);
     }
 
     public static String getWebUrl() {

@@ -9,6 +9,7 @@ import dataProviders.dataProvidersModels.web.commonModels.DestinationModel;
 import dataProviders.dataProvidersModels.web.hotelsPageModels.AccommodationModel;
 import dataProviders.dataProvidersModels.web.hotelsPageModels.ChildModel;
 import dataProviders.dataProvidersModels.web.phpTravelsModel.PhpTravelsModel;
+import driver.WebProperties;
 import io.qameta.allure.Step;
 import models.web.menu.hotelsPage.hotelsSearchPage.HotelsSearchPage;
 import org.openqa.selenium.By;
@@ -377,11 +378,18 @@ public class SearchBarHotels extends SearchBarHotelsLocators {
     }
 
     private void checkCityBeforeInput() {
-        compareCityBeforeOrAfterInput("Search By City", citySpan, "before");
+        String browser = WebProperties.getBrowser();
+        String expectedPhrase = switch (browser) {
+            case "chrome", "firefox" -> "Search By City";
+            case "safari" -> "Search by City";
+            default -> null;
+        };
+
+        compareCityBeforeOrAfterInput(expectedPhrase, citySpan, "before");
     }
 
     private void compareCityBeforeOrAfterInput(String expectedLocationValue, WebElement element, String inputStage) {
-        String actualLocationValue = get.getTextFromElement(element);
+        String actualLocationValue = get.getTextFromElement(element).trim();
 
         assertThat(actualLocationValue)
                 .as("City check " + inputStage + " input")
@@ -460,7 +468,7 @@ public class SearchBarHotels extends SearchBarHotelsLocators {
 
         check.isElementPresentByLocator(locator, 10);
 
-        switch(checkType) {
+        switch (checkType) {
             case IN -> click.clickOnEnabledElement(checkInDateInput, 15);
             case OUT -> click.clickOnEnabledElement(checkOutDateInput, 15);
         }

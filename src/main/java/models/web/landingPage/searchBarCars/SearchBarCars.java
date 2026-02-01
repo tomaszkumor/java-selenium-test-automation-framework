@@ -379,7 +379,7 @@ public class SearchBarCars extends SearchBarCarsLocators {
     }
 
     private void compareCityBeforeOrAfterInput(String expectedLocationValue, WebElement element, String inputStage) {
-        String actualLocationValue = get.getTextFromElement(element);
+        String actualLocationValue = get.getTextFromElement(element).trim();
 
         assertThat(actualLocationValue)
                 .as("City check " + inputStage + " input")

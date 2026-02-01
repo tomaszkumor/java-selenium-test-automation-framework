@@ -7,7 +7,7 @@ import static utils.logger.Log4J.log;
 
 public class FlightsSearchPage extends FlightsSearchPageLocators {
     public FlightsSearchPage() {
-        browser.waitForPageLoaded(30);
+        browser.waitForPageLoaded(10);
         checkUrl();
         hideAd();
         log.info("Flights search page has been displayed.");

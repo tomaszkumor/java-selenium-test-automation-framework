@@ -26,8 +26,8 @@ public class BasePageFactory {
     }
 
     private void initElements() {
-        String framework = TestStackProperties.getFramework();
-        switch (framework) {
+        String platform = TestStackProperties.getPlatform();
+        switch (platform) {
             case "web", "api" -> initElementsForDesktopTest();
             case "mobile" -> initElementsForMobileTest();
         }

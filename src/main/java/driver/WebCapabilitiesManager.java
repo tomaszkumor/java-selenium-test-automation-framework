@@ -3,10 +3,13 @@ package driver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.safari.SafariOptions;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,6 +17,66 @@ import java.util.Map;
 import java.util.logging.Level;
 
 public class WebCapabilitiesManager {
+    public FirefoxOptions setFirefoxOptionsRemote() {
+        FirefoxOptions options = new FirefoxOptions();
+        options.setAcceptInsecureCerts(true);
+        options.setPageLoadStrategy(PageLoadStrategy.EAGER);
+        options.setCapability(CapabilityType.PLATFORM_NAME, "ANY");
+        options.setCapability(CapabilityType.BROWSER_NAME, "firefox");
+
+        FirefoxProfile profile = new FirefoxProfile();
+        profile.setPreference("dom.disable_open_during_load", true);
+        profile.setPreference("signon.rememberSignons", false);
+        options.setProfile(profile);
+
+        if (isHeadless()) {
+            options.addArguments("-headless");
+            options.addArguments("--width=1200");
+            options.addArguments("--height=1024");
+        }
+
+        return options;
+    }
+
+    public FirefoxOptions setFirefoxOptions() {
+        WebDriverManager.firefoxdriver().setup();
+
+        FirefoxOptions options = new FirefoxOptions();
+        options.setPageLoadStrategy(PageLoadStrategy.EAGER);
+        options.setAcceptInsecureCerts(true);
+
+        FirefoxProfile profile = new FirefoxProfile();
+        profile.setPreference("dom.disable_open_during_load", true);
+        profile.setPreference("signon.rememberSignons", false);
+        profile.setPreference("network.cookie.cookieBehavior", 0);
+        options.setProfile(profile);
+
+        if (isHeadless()) {
+            options.addArguments("-headless");
+            options.addArguments("--width=1200");
+            options.addArguments("--height=1024");
+        }
+
+        return options;
+    }
+
+    public SafariOptions setSafariOptionsRemote() {
+        SafariOptions options = new SafariOptions();
+        options.setAcceptInsecureCerts(true);
+        options.setCapability(CapabilityType.BROWSER_NAME, "safari");
+        options.setCapability(CapabilityType.PLATFORM_NAME, "MAC");
+
+        return options;
+    }
+
+    public SafariOptions setSafariOptions() {
+        SafariOptions options = new SafariOptions();
+        options.setAcceptInsecureCerts(true);
+        options.setCapability(CapabilityType.PLATFORM_NAME, "MAC");
+
+        return options;
+    }
+
     public ChromeOptions setChromeOptionsRemote() {
         LoggingPreferences loggingPreferences = new LoggingPreferences();
         loggingPreferences.enable(LogType.PERFORMANCE, Level.WARNING);
@@ -38,7 +101,6 @@ public class WebCapabilitiesManager {
         options.setCapability("goog:loggingPrefs", loggingPreferences);
         options.setCapability(CapabilityType.PLATFORM_NAME, "ANY");
         options.setCapability(ChromeOptions.CAPABILITY, options);
-        options.setCapability("se:name", "sme-banking");
 
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("profile.default_content_settings.popups", 0);

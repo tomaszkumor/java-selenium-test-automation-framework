@@ -19,27 +19,29 @@ import static utils.logger.Log4J.log;
 public class BaseTest {
     @BeforeMethod
     public void beforeMethod() {
-        String framework = getFramework();
-        logAll(framework);
+        String platform = getPlatform();
+        logAll(platform);
 
-        switch (framework) {
+        switch (platform) {
             case "web" -> {
                 getWebDriver().setDriver();
                 getWebDriver().getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(25));
+                prepareBrowserForTests();
                 runBrowserWithUrl();
             }
             case "mobile" -> {
                 getWebDriver().setDriver();
                 getWebDriver().getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(25));
             }
+            default -> throw new IllegalArgumentException("Unsupported platform");
         }
     }
 
     @SneakyThrows
     @BeforeClass
     public void beforeClass() {
-        String framework = getFramework();
-        switch (framework) {
+        String platform = getPlatform();
+        switch (platform) {
             case "mobile" -> Runtime.getRuntime().exec("adb shell pm clear org.wikipedia.alpha");
         }
     }
@@ -50,8 +52,8 @@ public class BaseTest {
     }
 
     private void closeDriver() {
-        String framework = getFramework();
-        switch (framework) {
+        String platform = getPlatform();
+        switch (platform) {
             case "web" -> {
                 if (!WebProperties.isDebugMode()) {
                     terminateDriver();
@@ -87,28 +89,51 @@ public class BaseTest {
 
     private void runBrowserWithUrl() {
         String url = TestStackProperties.getWebUrl();
-
-        getWebDriver().getDriver().manage().deleteAllCookies();
         getWebDriver().getDriver().get(url);
+
         log.info("Browser has been opened.");
     }
 
-    private void logAll(String framework) {
-        logAllForEachFramework(framework);
-
-        switch (framework) {
-            case "web" -> logAllForWeb();
-            case "mobile" -> logAllForMobile();
-            case "api" -> logAllForApi();
+    private void prepareBrowserForTests() {
+        String browserName = WebProperties.getBrowser();
+        switch (browserName) {
+            case "chrome" -> prepareChromeBrowserForTests();
+            case "firefox" -> prepareFirefoxBrowserForTests();
+            case "safari" -> prepareSafariBrowserForTests();
         }
     }
 
-    private void logAllForEachFramework(String framework) {
+    private void prepareChromeBrowserForTests() {
+        getWebDriver().getDriver().manage().deleteAllCookies();
+    }
+
+    private void prepareSafariBrowserForTests() {
+        getWebDriver().getDriver().manage().window().maximize();
+    }
+
+    private void prepareFirefoxBrowserForTests() {
+        getWebDriver().getDriver().manage().deleteAllCookies();
+        getWebDriver().getDriver().manage().window().maximize();
+    }
+
+    private void logAll(String platform) {
+        logAllForEachPlatform(platform);
+
+        switch (platform) {
+            case "web" -> logAllForWeb();
+            case "mobile" -> logAllForMobile();
+            case "api" -> logAllForApi();
+            default -> throw new IllegalArgumentException("Unsupported platform");
+        }
+    }
+
+    private void logAllForEachPlatform(String platform) {
         log.info("ENV: " + TestStackProperties.getEnvironment());
-        log.info("FRAMEWORK: " + framework.toUpperCase());
+        log.info("PLATFORM: " + platform.toUpperCase());
     }
 
     private void logAllForWeb() {
+        log.info("BROWSER: " + WebProperties.getBrowser().toUpperCase());
         log.info("HEADLESS MODE: " + WebProperties.isHeadlessMode());
         log.info("GRID MODE: " + WebProperties.isGridMode());
         log.info("DEBUG MODE: " + WebProperties.isDebugMode());
@@ -129,8 +154,8 @@ public class BaseTest {
         }
     }
 
-    private String getFramework() {
-        return TestStackProperties.getFramework();
+    private String getPlatform() {
+        return TestStackProperties.getPlatform();
     }
 
     private String getMobileSystem() {

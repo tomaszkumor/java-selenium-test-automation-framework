@@ -7,6 +7,7 @@ import dataProviders.dataProvidersModels.web.commonModels.DateModel;
 import dataProviders.dataProvidersModels.web.commonModels.TravellerModel;
 import dataProviders.dataProvidersModels.web.commonModels.DestinationModel;
 import dataProviders.dataProvidersModels.web.phpTravelsModel.PhpTravelsModel;
+import driver.WebProperties;
 import io.qameta.allure.Step;
 import models.web.menu.toursPage.toursSearchPage.ToursSearchPage;
 import org.openqa.selenium.By;
@@ -395,11 +396,18 @@ public class SearchBarTours extends SearchBarToursLocators {
     }
 
     private void checkCityBeforeInput() {
-        compareCityBeforeOrAfterInput("Search By City", citySpan, "before");
+        String browser = WebProperties.getBrowser();
+        String expectedPhrase = switch (browser) {
+            case "chrome", "firefox" -> "Search By City";
+            case "safari" -> "Search by City";
+            default -> null;
+        };
+
+        compareCityBeforeOrAfterInput(expectedPhrase, citySpan, "before");
     }
 
     private void compareCityBeforeOrAfterInput(String expectedLocationValue, WebElement element, String inputStage) {
-        String actualLocationValue = get.getTextFromElement(element);
+        String actualLocationValue = get.getTextFromElement(element).trim();
 
         assertThat(actualLocationValue)
                 .as("City check " + inputStage + " input")

@@ -10,7 +10,9 @@ import lombok.SneakyThrows;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.events.EventFiringDecorator;
 
 import java.net.URL;
@@ -30,8 +32,8 @@ public class BaseDriver {
     }
 
     public BaseDriver setDriver() {
-        String framework = TestStackProperties.getFramework();
-        switch (framework) {
+        String platform = TestStackProperties.getPlatform();
+        switch (platform) {
             case "web" -> runDesktopTests();
             case "mobile" -> runMobileTests();
         }
@@ -48,8 +50,8 @@ public class BaseDriver {
     }
 
     private void runDesktopTests() {
-        String framework = TestStackProperties.getFramework();
-        switch (framework) {
+        String platform = TestStackProperties.getPlatform();
+        switch (platform) {
             case "web" -> {
                 if (WebProperties.isGridMode()) {
                     runDesktopTestsRemotely();
@@ -80,7 +82,14 @@ public class BaseDriver {
 
     @SneakyThrows
     public void runDesktopTestsRemotely() {
-        Capabilities capabilities = new WebCapabilitiesManager().setChromeOptionsRemote();
+        String browser = WebProperties.getBrowser();
+        Capabilities capabilities = switch (browser) {
+            case "chrome" -> new WebCapabilitiesManager().setChromeOptionsRemote();
+            case "firefox" -> new WebCapabilitiesManager().setFirefoxOptionsRemote();
+            case "safari" -> new WebCapabilitiesManager().setSafariOptionsRemote();
+            default -> throw new IllegalArgumentException("Unsupported browser");
+        };
+//
         DriverListener listener = new DriverListener();
         RemoteWebDriver originalDriver = new RemoteWebDriver(new URL("xxx"), capabilities);
 
@@ -89,8 +98,23 @@ public class BaseDriver {
     }
 
     public void runDesktopTestsLocally() {
-        DRIVER_THREAD_LOCAL.set(new ChromeDriver(new WebCapabilitiesManager().setChromeOptions()));
-        log.info("Chrome driver on local environment has been set.");
+        String browser = WebProperties.getBrowser();
+        switch (browser) {
+            case "chrome" -> {
+                DRIVER_THREAD_LOCAL.set(new ChromeDriver(new WebCapabilitiesManager().setChromeOptions()));
+                log.info("Chrome driver on local environment has been set.");
+            }
+            case "firefox" -> {
+                DRIVER_THREAD_LOCAL.set(new FirefoxDriver(new WebCapabilitiesManager().setFirefoxOptions()));
+                log.info("Firefox driver on local environment has been set.");
+            }
+            case "safari" -> {
+                DRIVER_THREAD_LOCAL.set(new SafariDriver(new WebCapabilitiesManager().setSafariOptions()));
+                log.info("Safari driver on local environment has been set.");
+            }
+        }
+
+
     }
 
     public WebDriver getDriver() {

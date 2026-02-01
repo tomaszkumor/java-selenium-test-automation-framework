@@ -2,9 +2,11 @@
 environment: ENV1
 
 # web / mobile / api
-framework: mobile
+platform: web
 
 web:
+  # chrome / firefox / safari
+  browser: chrome
   grid: false
   debug: false
   headless: false

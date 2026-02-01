@@ -46,7 +46,7 @@ This framework is intended as a **portfolio project** demonstrating practical kn
 - Possible support for E2E-style API flows (e.g. create → validate → delete resource)
 
 ### Web testing architectural considerations:
-- Chrome browser support (possible extension to Safari, FireFox and Edge)
+- Chrome, Firefox and Safari browsers support
 - Selenium Grid support
 - Parallel execution support
 - Headless mode support

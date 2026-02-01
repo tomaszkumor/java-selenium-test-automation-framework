@@ -548,7 +548,7 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
         String expectedFlightDestinationValue = getExpectedFlightDestinationAsStringFromDataProvider(phpTravelsModel);
 
         Select flightDestinationSelect = new Select(this.flightDestinationSelect);
-        String actualFlightDestinationValue = get.getTextFromElement(flightDestinationSelect.getFirstSelectedOption());
+        String actualFlightDestinationValue = get.getTextFromElement(flightDestinationSelect.getFirstSelectedOption()).trim();
         assertThat(actualFlightDestinationValue)
                 .as("Flight destination value check")
                 .isEqualTo(expectedFlightDestinationValue);
@@ -560,7 +560,7 @@ public class SearchBarFlights extends SearchBarFlightsLocators {
         String expectedCabinClassValue = getExpectedCabinClassFromDataProvider(phpTravelsModel);
 
         Select cabinClassSelect = new Select(this.cabinClassSelect);
-        String actualCabinClassValue = get.getTextFromElement(cabinClassSelect.getFirstSelectedOption());
+        String actualCabinClassValue = get.getTextFromElement(cabinClassSelect.getFirstSelectedOption()).trim();
         assertThat(actualCabinClassValue)
                 .as("Cabin class value check")
                 .isEqualTo(expectedCabinClassValue);
