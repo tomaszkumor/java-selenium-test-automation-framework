@@ -72,7 +72,7 @@ public class EndpointUser {
     public EndpointUser sendGetRequestUser(PetStoreModel petStoreModel) {
         RequestSpecification requestSpecification = buildBasicRequestSpecification();
         String userName = getExpectedUserNameFromDataProvider(petStoreModel);
-        System.out.println(userName);
+
         String requestEndpointUrl = "/user/{userName}";
 
         response = given()

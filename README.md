@@ -10,13 +10,80 @@ This framework is intended as a **portfolio project** demonstrating practical kn
 
 ---
 
+## How to run
+
+### Clone repository:
+```bash
+git clone https://github.com/tomaszkumor/java-selenium-test-automation-framework.git
+```
+### Install dependencies:
+```bash
+cd java-selenium-test-automation-framework
+mvn clean install
+```
+### Run
+#### API tests:
+
+```bash
+mvn test -Dsurefire.suiteXmlFiles=src/test/resources/testSuites/api/PET_STORE.xml -Denvironment=ENV1 -Dplatform=api -Dapi.debug=false
+```
+
+#### Web tests:
+
+```bash
+mvn test -Dsurefire.suiteXmlFiles=src/test/resources/testSuites/web/PHP_TRAVELS.xml -Denvironment=ENV1 -Dplatform=web -Dweb.browser=chrome -Dweb.grid=false -Dweb.debug=false -Dweb.headless=false
+```
+
+#### Mobile tests (Android):
+
+1. Connect your Android smartphone via USB cable to computer.
+2. Start Android Debug Bridge (ADB).
+```bash
+adb start-server
+```
+3. Find your device udid.
+```bash
+adb devices
+```
+4. Let ADB to establish a connection with an Android device.
+```bash
+adb connect device_udid
+```
+5. Run Appium.
+```bash
+appium --use-plugins=inspector --allow-cors
+```
+6. Change udid in `MobileCapabilitiesManager` class in `setAndroidCapabilities` method.
+```java
+public UiAutomator2Options setAndroidCapabilities() {
+...
+.setUdid("udid")
+...
+}
+```
+7. Type command in your PowerShell/Terminal.
+```bash
+mvn test -Dsurefire.suiteXmlFiles=src/test/resources/testSuites/mobile/WIKI_ALPHA.xml -Denvironment=ENV1 -Dplatform=mobile -Dmobile.system=android -Dmobile.debug=false
+```
+
+> **Note:**
+> Due to the lack of access to physical iOS devices in the local development environment, mobile test execution is currently limited to Android devices only.
+
+
+### Generate Allure report:
+```bash
+allure serve
+```
+
+---
+
 ## Technology stack
 
-- **Language:** Java
-- **Build Tool:** Maven
+- **Language:** Java 21
+- **Build Tool:** Maven 3.9.x
 - **Test Framework:** TestNG
-- **Web Automation:** Selenium
-- **Mobile Automation:** Appium
+- **Web Automation:** Selenium 4.x.x
+- **Mobile Automation:** Appium 3.x.x
 - **API Testing:** RestAssured
 - **Reporting:** Allure
 - **Logging:** Log4j2
@@ -77,6 +144,47 @@ The framework uses **YAML-based configuration files** for runtime control.
 
 No Maven or TestNG parameters are required — all runtime behavior is driven via configuration files.
 
+---
+
+## Project structure:
+
+```
+src/
+ ├── main
+ │     ├── java
+ │     │     ├── actions
+ │     │     ├── basePageFactory
+ │     │     ├── config
+ │     │     ├── constants
+ │     │     ├── dataProviders
+ │     │     ├── driver
+ │     │     ├── listeners
+ │     │     ├── models
+ │     │     │     ├── api
+ │     │     │     ├── mobile
+ │     │     │     └── web
+ │     │     └── utils
+ │     └── resources
+ │           ├── api
+ │           ├── filesPaths
+ │           ├── mobileApp
+ │           ├── settings
+ │           ├── users
+ │           └── BasicSettings.yaml
+ └── test
+       ├── java
+       │     ├── baseTest
+       │     └── tests
+       │           ├── api
+       │           ├── mobile
+       │           └── web
+       └── resources
+             ├── testSuites
+             │     ├── api
+             │     ├── mobile
+             │     └── web
+             └── log4j2.xml
+```
 ---
 
 ## Reporting & logging
@@ -154,7 +262,16 @@ Possible extensions:
 
 ## Disclaimer
 
-This project is intended for **demonstration and portfolio purposes**.  
+Web tests in this framework were originally developed against an older version
+of the PHPTravels demo website. Since then, the live demo site has undergone a complete
+redesign, which changed whole page structure.
+
+As a result, tests relying on the live PHPTravels site fail and not run as expected.
+
+The purpose of this repository is to **demonstrate test automation architecture,
+design patterns, configuration management, and best practices**, not to provide
+fully passing tests against the current live PHPTravels site.
+
 All configuration values, URLs, and credentials are mock or non-sensitive.
 
 ---
