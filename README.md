@@ -80,7 +80,7 @@ allure serve
 - **Test Framework:** TestNG
 - **Web Automation:** Selenium 4.x.x
 - **Mobile Automation:** Appium 3.x.x
-- **API Testing:** RestAssured
+- **API Automation:** RestAssured
 - **Reporting:** Allure
 - **Logging:** Log4j2
 - **CI/CD readiness:** Yes
@@ -185,7 +185,7 @@ src/
 
 ## Web tests independence
 
-Web and mobile tests are fully independent.
+Web tests are fully independent.
 
 ## API tests independence
 
