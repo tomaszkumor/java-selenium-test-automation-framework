@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  api-tests-1:
+  api-tests-selenium:
     runs-on: ubuntu-latest
 
     steps:
