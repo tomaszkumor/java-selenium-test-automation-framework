@@ -1,24 +1,23 @@
 name: API tests (Playwright framework)
 
 on:
-  push:
-    branches:
-      - main
-      - issue-*
-
   workflow_dispatch:
   schedule:
-    - cron: '5 6 * * 1'   # 07:05 PL
+    - cron: '0 6 * * 1'   # 07:00 PL
 
 permissions:
   contents: write
 
+concurrency:
+  group: api-tests-2
+  cancel-in-progress: true
+
 jobs:
-  build:
+  api-tests-1:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up JDK 21
@@ -31,30 +30,12 @@ jobs:
       - name: Run API tests
         run: |
           mvn -pl java-playwright-test-automation-framework test \
-           -Dsurefire.suiteXmlFiles=src/test/resources/testSuites/api/PET_STORE.xml \
-           -Denvironment=ENV1 -Dplatform=api -Dapi.debug=false
+          -Dsurefire.suiteXmlFiles=src/test/resources/testSuites/api/PET_STORE.xml \
+          -Denvironment=ENV1 -Dplatform=api -Dapi.debug=false
 
-      - name: Checkout gh-pages (history)
+      - name: Upload Allure results
         if: always()
-        uses: actions/checkout@v4
+        uses: actions/upload-artifact@v4
         with:
-          ref: gh-pages
-          path: gh-pages
-        continue-on-error: true
-
-      - name: Generate Allure report
-        if: always()
-        uses: simple-elf/allure-report-action@master
-        with:
-          allure_results: java-playwright-test-automation-framework/allure-results
-          gh_pages: gh-pages/api-tests-2
-          allure_history: allure-history/api-tests-2
-          keep_reports: 10
-
-      - name: Deploy report to GitHub Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: gh-pages
+          name: allure-results-api-2
+          path: java-playwright-test-automation-framework/allure-results

@@ -5,7 +5,6 @@ on:
     branches:
       - main
       - issue-*
-
   workflow_dispatch:
   schedule:
     - cron: '30 6 * * 1'  # 07:30 PL
@@ -14,11 +13,11 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  ui-tests-1:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up JDK 21
@@ -29,32 +28,15 @@ jobs:
           cache: maven
 
       - name: Run UI tests
-        run: | 
-         mvn -pl java-selenium-test-automation-framework test \
-         -Dsurefire.suiteXmlFiles=src/test/resources/testSuites/web/PHP_TRAVELS.xml \
-         -Denvironment=ENV1 -Dplatform=web -Dweb.browser=chrome -Dweb.grid=false -Dweb.debug=false -Dweb.headless=true
+        run: |
+          mvn -pl java-selenium-test-automation-framework test \
+            -Dsurefire.suiteXmlFiles=src/test/resources/testSuites/web/PHP_TRAVELS.xml \
+            -Denvironment=ENV1 -Dplatform=web -Dweb.browser=chrome \
+            -Dweb.grid=false -Dweb.debug=false -Dweb.headless=true
 
-      - name: Checkout gh-pages (history)
+      - name: Upload Allure results
         if: always()
-        uses: actions/checkout@v4
+        uses: actions/upload-artifact@v4
         with:
-          ref: gh-pages
-          path: gh-pages
-        continue-on-error: true
-
-      - name: Generate Allure report
-        if: always()
-        uses: simple-elf/allure-report-action@master
-        with:
-          allure_results: java-selenium-test-automation-framework/allure-results
-          gh_pages: gh-pages/api-tests-1
-          allure_history: allure-history/api-tests-1
-          keep_reports: 10
-
-      - name: Deploy report to GitHub Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: gh-pages
+          name: allure-results-ui-1
+          path: java-selenium-test-automation-framework/allure-results
