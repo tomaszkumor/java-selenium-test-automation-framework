@@ -20,11 +20,11 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Run API tests for java-selenium-test-automation-framework
+      - name: Run API tests
         run: |
           mvn -pl java-selenium-test-automation-framework test \
-          -Dsurefire.suiteXmlFiles=src/test/resources/testSuites/api/PET_STORE.xml \
-          -Denvironment=ENV1 -Dplatform=api -Dapi.debug=false
+            -Dsurefire.suiteXmlFiles=src/test/resources/testSuites/api/PET_STORE.xml \
+            -Denvironment=ENV1 -Dplatform=api -Dapi.debug=false
 
       - name: Upload Allure results (artifact)
         if: always()
@@ -36,6 +36,8 @@ jobs:
       - name: Generate Allure HTML report
         if: always()
         run: |
+          mkdir -p java-selenium-test-automation-framework/target/allure-results
+          cp -r java-selenium-test-automation-framework/allure-results/* java-selenium-test-automation-framework/target/allure-results/
           mvn allure:report -pl java-selenium-test-automation-framework
           mkdir -p api-1
           cp -r java-selenium-test-automation-framework/target/site/allure-maven-plugin/* api-1/
