@@ -45,7 +45,7 @@ allure serve java-playwright-test-automation-framework/allure-results
 - **API Automation:** Playwright 1.58.x
 - **Reporting:** Allure
 - **Logging:** Log4j2
-- **CI/CD readiness:** Yes
+- **CI:** GitHub Actions (scheduled & manual execution)
 
 ## Design patterns & architectural concepts
 
@@ -138,6 +138,31 @@ test-automation-frameworks-portfolio
 - Automatic retry mechanism for flaky tests
 - TestNG listeners integrated
 
+## Continuous Integration (CI)
+
+The project is integrated with **GitHub Actions** to enable automated and repeatable test execution in a CI environment.
+
+### CI capabilities:
+- Separate GitHub Actions workflows for:
+  - **API tests**
+  - **Web tests**
+- Scheduled execution:
+  - Tests are automatically executed **every Monday**
+- Manual execution:
+  - Workflows can also be triggered manually via **workflow_dispatch**
+- Maven-based execution aligned with local run commands
+- Headless browser execution for web tests in CI environment
+- CI-ready configuration without code changes
+
+### Purpose of CI setup:
+- Demonstrate CI integration for test automation frameworks
+- Validate framework stability in a clean, isolated environment
+- Enable regular, unattended regression checks
+
+The CI configuration reflects a typical industry setup where API and UI test
+suites are executed independently and can be scaled or extended in the future
+(e.g. nightly runs, environment-based pipelines, reporting integration).
+
 ## Web tests independence
 
 Web tests are fully independent.
@@ -151,7 +176,6 @@ API tests may follow ordered execution when validating business flows
 
 Possible extensions:
 - Maven profiles for test selection
-- CI pipeline integration (GitHub Actions / Jenkins)
 - Enhanced API authentication support
 
 ## Disclaimer
