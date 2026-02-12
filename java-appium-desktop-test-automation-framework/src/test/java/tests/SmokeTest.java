@@ -2,17 +2,24 @@ package tests;
 
 import baseTest.BaseTest;
 import lombok.SneakyThrows;
+import models.openFileWindow.OpenFileWindow;
 import org.testng.annotations.Test;
 
-import static driver.BaseDriver.getWebDriver;
 
 public class SmokeTest extends BaseTest {
     @Test
     @SneakyThrows
-    public void Test() {
-        Thread.sleep(20000);
+    public void test() {
+        new OpenFileWindow()
+                .clickOnNewDocumentButton();
 
-        System.out.println(getWebDriver().getDriver().getPageSource());
+        Thread.sleep(15000);
+    }
+
+    @Test
+    @SneakyThrows
+    public void test2() {
+        Thread.sleep(15000);
     }
 
 }

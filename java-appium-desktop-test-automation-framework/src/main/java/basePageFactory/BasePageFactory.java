@@ -1,7 +1,6 @@
 package basePageFactory;
 
 import actions.*;
-import config.TestStackProperties;
 import org.openqa.selenium.support.PageFactory;
 
 import static driver.BaseDriver.getWebDriver;
@@ -23,13 +22,6 @@ public class BasePageFactory {
     }
 
     private void initElements() {
-        String platform = TestStackProperties.getPlatform();
-        switch (platform) {
-            case "macos" -> initElementsForDesktopTest();
-        }
-    }
-
-    private void initElementsForDesktopTest() {
         PageFactory.initElements(getWebDriver().getDriver(), this);
     }
 }
