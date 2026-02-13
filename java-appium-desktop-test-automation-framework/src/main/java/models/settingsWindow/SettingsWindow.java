@@ -1,5 +1,6 @@
 package models.settingsWindow;
 
+import io.qameta.allure.Step;
 import models.settingsWindow.fontSizeModal.FontSizeModal;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,6 +12,7 @@ public class SettingsWindow extends SettingsWindowLocators {
         log.info("Settings window is displayed.");
     }
 
+    @Step("Click on font size button")
     public FontSizeModal clickOnFontSizeButton() {
         click.clickOnVisibleElement(fontSizeButton, 15);
         log.info("Font size button has been clicked.");
@@ -18,6 +20,7 @@ public class SettingsWindow extends SettingsWindowLocators {
         return new FontSizeModal();
     }
 
+    @Step("Check font size after edit")
     public SettingsWindow checkFontSizeAfterEdit(String expectedFontSize) {
         String actualFontSize = get.getValueFromElement(fontSizeButton);
 

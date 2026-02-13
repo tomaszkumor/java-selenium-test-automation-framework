@@ -1,5 +1,6 @@
 package models.settingsWindow.fontSizeModal;
 
+import io.qameta.allure.Step;
 import models.settingsWindow.SettingsWindow;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -13,6 +14,7 @@ public class FontSizeModal extends FontSizeModalLocators {
         log.info("Font size modal has been displayed.");
     }
 
+    @Step("Select font size")
     public SettingsWindow selectFontSize(String fontSize) {
         WebElement fontSizeButton = getFontSizeButton(fontSize);
         click.clickOnVisibleElement(fontSizeButton, 15);

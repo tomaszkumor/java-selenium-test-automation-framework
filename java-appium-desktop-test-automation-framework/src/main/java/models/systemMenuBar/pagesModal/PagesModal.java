@@ -1,5 +1,6 @@
 package models.systemMenuBar.pagesModal;
 
+import io.qameta.allure.Step;
 import models.settingsWindow.SettingsWindow;
 
 import static utils.logger.Log4J.log;
@@ -10,6 +11,7 @@ public class PagesModal extends PagesModalLocators {
         log.info("Page modal is displayed.");
     }
 
+    @Step("Click on settings button")
     public SettingsWindow clickOnSettingsButton() {
         click.clickOnVisibleElement(settingsButton, 15);
         log.info("Settings button has been clicked.");

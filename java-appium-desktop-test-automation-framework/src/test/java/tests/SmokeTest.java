@@ -6,8 +6,8 @@ import org.testng.annotations.Test;
 
 
 public class SmokeTest extends BaseTest {
-    @Test(priority = 1)
-    public void test() {
+    @Test()
+    public void openSettingsAndChangeFontSize() {
         new OpenFileWindow()
                 .clickOnNewDocumentButton()
                 .clickOnBasicThemesButton()
@@ -22,10 +22,10 @@ public class SmokeTest extends BaseTest {
         //TODO: wprowadz w DP losowanie liczby z zakresu 11-16
     }
 
-    @Test(priority = 2)
-    public void test2() {
+    @Test()
+    public void changeDocumentName() {
         new OpenFileWindow()
-                //todo: dodaj usuniecie pliku jesli to konieczne
+                .deleteFileIfNecessary("huehue")
                 .clickOnNewDocumentButton()
                 .clickOnBasicThemesButton()
                 .selectEmptyTheme()
@@ -39,4 +39,16 @@ public class SmokeTest extends BaseTest {
                 .checkDocumentNameAfterEdit("huehue");
     }
 
+    @Test()
+    public void changeDocumentScale() {
+        new OpenFileWindow()
+                .clickOnNewDocumentButton()
+                .clickOnBasicThemesButton()
+                .selectEmptyTheme()
+                .clickOnCreateButton()
+                .clickOnScaleButton()
+                .selectScale("100%")
+                .checkScale("100%");
+    }
+//todo: zrob obsluge drugiej aplikacji w zaleznosci od nazwy
 }

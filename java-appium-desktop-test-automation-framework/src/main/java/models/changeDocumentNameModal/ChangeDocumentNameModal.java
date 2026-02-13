@@ -1,5 +1,6 @@
 package models.changeDocumentNameModal;
 
+import io.qameta.allure.Step;
 import models.textEditor.TextEditor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -15,6 +16,7 @@ public class ChangeDocumentNameModal extends ChangeDocumentNameModalLocators {
         log.info("Change document name modal is displayed.");
     }
 
+    @Step("Change document name")
     public ChangeDocumentNameModal changeName(String expectedDocumentName) {
         checkDocumentNameBeforeEdit();
         changeDocumentName(expectedDocumentName);
@@ -23,6 +25,7 @@ public class ChangeDocumentNameModal extends ChangeDocumentNameModalLocators {
         return this;
     }
 
+    @Step("Close change name modal")
     public TextEditor closeChangeNameModal() {
         Actions actions = new Actions(getWebDriver().getDriver());
         actions.sendKeys(Keys.ENTER).perform();

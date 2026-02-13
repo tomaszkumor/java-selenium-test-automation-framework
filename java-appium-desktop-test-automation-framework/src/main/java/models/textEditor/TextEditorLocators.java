@@ -9,5 +9,6 @@ public class TextEditorLocators extends SystemMenuBar {
     WebElement toolbar;
     @FindBy(xpath = "//XCUIElementTypeWindow/XCUIElementTypeStaticText")
     WebElement documentNameLabel;
-    //todo: allure-results do gitignore
+    @FindBy(xpath = "//XCUIElementTypeMenuButton[@label = 'Zoom']/XCUIElementTypeMenuButton")
+    WebElement scaleButton;
 }

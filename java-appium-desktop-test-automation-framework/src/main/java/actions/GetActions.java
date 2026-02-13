@@ -43,6 +43,16 @@ public class GetActions extends BaseActions {
     }
 
     @SneakyThrows
+    public String getAttributeFromElement(WebElement element, String attributeName) {
+        try {
+            return new WebDriverWait(getWebDriver().getDriver(), Duration.ofSeconds(10))
+                    .until(ExpectedConditions.visibilityOf(element)).getAttribute(attributeName);
+        } catch (Exception e) {
+            throw new Exception("Unable to get value from an element: " + e.getMessage());
+        }
+    }
+
+    @SneakyThrows
     public String getValueFromElement(WebElement element, String attribute) {
         try {
             return new WebDriverWait(getWebDriver().getDriver(), Duration.ofSeconds(10))

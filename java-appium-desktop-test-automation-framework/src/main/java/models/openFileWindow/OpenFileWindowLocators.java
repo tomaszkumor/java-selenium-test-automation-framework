@@ -9,4 +9,6 @@ public class OpenFileWindowLocators extends SystemMenuBar {
     WebElement openFileWindow;
     @FindBy(xpath = "//XCUIElementTypeWindow/XCUIElementTypeSplitGroup/XCUIElementTypeButton[@identifier = 'NewDocumentButton']")
     WebElement newDocumentButton;
+    @FindBy(xpath = "//XCUIElementTypeMenu/XCUIElementTypeMenuItem[@identifier = 'cmdMoveToTrash:']")
+    WebElement removeButton;
 }
