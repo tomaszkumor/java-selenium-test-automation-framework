@@ -5,4 +5,6 @@ environment: ENV1
 platform: macos
 
 macos:
+# pages / numbers
+  application: numbers
   debug: false

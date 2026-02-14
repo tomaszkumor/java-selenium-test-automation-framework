@@ -1,6 +1,7 @@
 package baseTest;
 
 import config.TestStackProperties;
+import driver.DesktopCapabilitiesManager;
 import driver.DesktopProperties;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -48,6 +49,8 @@ public class BaseTest {
                     .inheritIO()
                     .start()
                     .waitFor();
+
+            log.info("Close script has been executed.");
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -56,7 +59,7 @@ public class BaseTest {
     private void terminateDriver() {
         if (getWebDriver().getDriver() != null) {
             getWebDriver().getDriver().quit();
-            log.info("mac driver has been terminated.");
+            log.info("Mac2 driver has been terminated.");
         }
     }
 
@@ -81,7 +84,7 @@ public class BaseTest {
     }
 
     private String getApplicationName() {
-        return TestStackProperties.getApplicationName().toUpperCase();
+        return DesktopCapabilitiesManager.setApplicationName().toUpperCase();
     }
 
     private boolean isHeadlessMode() {
@@ -89,6 +92,6 @@ public class BaseTest {
     }
 
     private String getBundleId() {
-        return TestStackProperties.getBundleId();
+        return DesktopCapabilitiesManager.setApplicationBundleId().toUpperCase();
     }
 }

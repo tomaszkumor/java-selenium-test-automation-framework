@@ -5,15 +5,34 @@ import io.appium.java_client.mac.options.Mac2Options;
 
 public class DesktopCapabilitiesManager {
     public Mac2Options setMacCapabilities() {
-        String applicationPath = TestStackProperties.getApplicationPath();
+        String applicationBundleId = setApplicationBundleId();
         Mac2Options options = new Mac2Options()
                 .setPlatformName("macOS")
                 .setAutomationName("mac2")
-                .setBundleId("com.apple.Pages");
+                .setBundleId(applicationBundleId);
 
         options.setCapability("deviceName", "Mac");
-        options.setCapability("app", applicationPath);
 
         return options;
+    }
+
+    public static String setApplicationBundleId() {
+        String applicationBundleId = DesktopProperties.getApplication().toLowerCase();
+
+        return switch(applicationBundleId) {
+            case "pages" -> TestStackProperties.getBundleIdPages();
+            case "numbers" -> TestStackProperties.getBundleIdNumbers();
+            default -> null;
+        };
+    }
+
+    public static String setApplicationName() {
+        String applicationBundleId = DesktopProperties.getApplication().toLowerCase();
+
+        return switch(applicationBundleId) {
+            case "pages" -> TestStackProperties.getApplicationNamePages();
+            case "numbers" -> TestStackProperties.getApplicationNameNumbers();
+            default -> null;
+        };
     }
 }

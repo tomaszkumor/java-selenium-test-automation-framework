@@ -38,8 +38,4 @@ public class BaseDriver {
     public void unload() {
         DRIVER_THREAD_LOCAL.remove();
     }
-
-    public static Mac2Driver getMac2Driver() {
-        return getWebDriver().getDriver();
-    }
 }

@@ -1,3 +1,4 @@
-application_path: /Applications/Pages Creator Studio.app
-application_name: Pages Creator Studio
-bundle_id: com.apple.Pages
+application_name_pages: Pages Creator Studio
+application_name_numbers: Numbers Creator Studio
+bundle_id_pages: com.apple.Pages
+bundle_id_numbers: com.apple.Numbers
