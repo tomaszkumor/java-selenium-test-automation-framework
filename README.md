@@ -1,9 +1,12 @@
 # Test Automation Frameworks Portfolio
 
 ## Overview
-This repository is a **portfolio of Java-based test automation frameworks**, demonstrating practical knowledge of automated testing architecture, design patterns, configuration management, and scalability considerations commonly used in real-world QA projects.
+This repository is a **portfolio of Java-based test automation frameworks**, demonstrating practical 
+knowledge of automated testing architecture, design patterns, configuration management, and scalability 
+considerations commonly used in real-world QA projects.
 
-The project contains multiple test automation frameworks, each implemented as a **separate Maven module**, focusing on different automation technologies and testing types (web, mobile, API).
+The project contains multiple test automation frameworks, each implemented as a **separate Maven module**, 
+focusing on different automation technologies and testing types (web, mobile, API).
 
 ## Modules
 
@@ -18,6 +21,10 @@ The project contains multiple test automation frameworks, each implemented as a 
   - web application with Playwright
   - REST API with Playwright
 
+### [Java Desktop macOS Test Automation Framework](java-desktop-macos-test-automation-framework/README.md)
+- Test automation for:
+  - desktop applications with Appium
+
 ## Purpose
 The goal of this portfolio is to demonstrate skills in QA automation:
 
@@ -25,7 +32,7 @@ The goal of this portfolio is to demonstrate skills in QA automation:
 - Applying design patterns (Fluent Page Object Model, Singleton, Builder, etc.)
 - Managing configurations and environments
 - Writing reusable and maintainable test code
-- Demonstrating cross-platform automation (web, mobile, API)
+- Demonstrating cross-platform automation (web, mobile, API, desktop)
 
 ## Tested applications
 
@@ -34,8 +41,11 @@ Frameworks cover testing of:
 - web application: PHPTravels
 - REST API: PetStore
 - mobile application: Wiki Alpha (read-only mode)
+- desktop applications: Pages, Numbers (Apple applications)
 
-> Note: All applications are either demo, sandbox, or used in a safe/read-only mode. All configuration values, URLs, and credentials are mock or non-sensitive. No destructive operations are performed against production systems.
+> Note: All applications are either demo, sandbox, or used in a safe/read-only mode. 
+> All configuration values, URLs, and credentials are mock or non-sensitive. 
+> No destructive operations are performed against production systems.
 
 ## Project structure
 
@@ -43,6 +53,7 @@ Frameworks cover testing of:
 test-automation-frameworks-portfolio
  ├── java-playwright-test-automation-framework
  ├── java-selenium-test-automation-framework
+ ├── java-desktop-macos-test-automation-framework
  ├── pom.xml (parent POM for multi-module project)
  └── README.md (main overview README file)
 ```
@@ -58,7 +69,7 @@ test-automation-frameworks-portfolio
 
 ## Future modules
 
-- macOS desktop application testing framework based on Appium
+- Playwright-based test framework in TypeScript for automating UI and API tests
 - BDD-style test automation framework based on Cucumber
 - Possible CI/CD integration for automated reporting and builds
 

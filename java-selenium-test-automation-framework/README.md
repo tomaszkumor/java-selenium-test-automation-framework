@@ -1,12 +1,25 @@
 # Java - Selenium - Test Automation Framework
 
 ## Overview
-This repository contains a comprehensive test automation framework built in Java, designed for automated testing of:
+This repository contains a comprehensive test automation framework built in Java, 
+designed for automated testing of:
 - Web application (Selenium)
 - Mobile application (Appium)
 - REST API (RestAssured)
 
-This framework is intended as a **portfolio project** demonstrating practical knowledge of test automation architecture, design patterns, configuration management, and scalability considerations commonly used in real-world QA Automation projects.
+This framework is intended as a **portfolio project** demonstrating practical knowledge of test automation 
+architecture, design patterns, configuration management, and scalability considerations commonly used in 
+real-world QA Automation projects.
+
+## Environment Requirements
+
+- Java 21
+- Maven 3.9+
+- Node.js
+- Chrome/Firefox/Safari browsers (for web tests)
+- Appium 3.x (for mobile tests)
+- Android device with ADB enabled (for mobile tests)
+- Appium UiAutomator2 (for Android) and XCUITest (for iOS) drivers installed (for mobile tests)
 
 ## How to run
 
@@ -65,7 +78,8 @@ mvn -pl java-selenium-test-automation-framework test -Dsurefire.suiteXmlFiles=sr
 ```
 
 > **Note:**
-> Due to the lack of access to physical iOS devices in the local development environment, mobile test execution is currently limited to Android devices only.
+> Due to the lack of access to physical iOS devices in the local development environment, 
+> mobile test execution is currently limited to Android devices only.
 
 
 ### Generate Allure report:
@@ -121,7 +135,8 @@ allure serve java-selenium-test-automation-framework/allure-results
 - Explicit and implicit waits
 
 > **Note:**  
-> Mobile tests are executed on physical devices only. Simulators were intentionally not used due to local hardware limitations.
+> Mobile tests are executed on physical devices only. Simulators were intentionally not used due to 
+> local hardware limitations.
 
 ## Configuration management
 
@@ -134,12 +149,14 @@ The framework uses **YAML-based configuration files** for runtime control.
 - Mobile platform selection: Android / iOS
 - Environment-specific data (URLs, credentials)
 
-No Maven or TestNG parameters are required — all runtime behavior is driven via configuration files.
+Runtime behavior can be controlled via YAML configuration files
+and optional Maven parameters.
 
 ## Project structure:
 
 ```
 test-automation-frameworks-portfolio
+ ├── java-desktop-macos-test-automation-framework
  ├── java-playwright-test-automation-framework
  ├── java-selenium-test-automation-framework
  │    ├── allure-results  
@@ -188,12 +205,13 @@ test-automation-frameworks-portfolio
 
 - Allure Reports for detailed test results
 - Log4j2 for structured logging
-- Automatic retry mechanism for flaky tests
+- Retry mechanism for flaky tests implemented using TestNG Retry Analyzer
 - TestNG listeners integrated
 
 ## Continuous Integration (CI)
 
-The project is integrated with **GitHub Actions** to enable automated and repeatable test execution in a CI environment.
+The project is integrated with **GitHub Actions** to enable automated and repeatable test 
+execution in a CI environment.
 
 ### CI capabilities:
 - Separate GitHub Actions workflows for:

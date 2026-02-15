@@ -1,11 +1,21 @@
 # Java - Playwright - Test Automation Framework
 
 ## Overview
-This repository contains a comprehensive test automation framework built in Java, designed for automated testing of:
+This repository contains a comprehensive test automation framework built in Java, 
+designed for automated testing of:
 - Web application (Playwright)
 - REST API (Playwright)
 
-This framework is intended as a **portfolio project** demonstrating practical knowledge of test automation architecture, design patterns, configuration management, and scalability considerations commonly used in real-world QA Automation projects.
+This framework is intended as a **portfolio project** demonstrating practical knowledge of test automation 
+architecture, design patterns, configuration management, and scalability considerations commonly used in 
+real-world QA Automation projects.
+
+## Environment Requirements
+
+- Java 21
+- Maven 3.9+
+- Node.js
+- Chromium, Firefox, WebKit engines
 
 ## How to run
 
@@ -85,12 +95,15 @@ The framework uses **YAML-based configuration files** for runtime control.
 - Browser settings (headless, parallel execution)
 - Environment-specific data (URLs, credentials)
 
-No Maven or TestNG parameters are required — all runtime behavior is driven via configuration files.
+Runtime behavior can be controlled via YAML configuration files
+and optional Maven parameters.
+
 
 ## Project structure:
 
 ```
 test-automation-frameworks-portfolio
+ ├── java-desktop-macos-test-automation-framework
  ├── java-selenium-test-automation-framework
  ├── java-playwright-test-automation-framework
  │    ├── allure-results  
@@ -140,7 +153,8 @@ test-automation-frameworks-portfolio
 
 ## Continuous Integration (CI)
 
-The project is integrated with **GitHub Actions** to enable automated and repeatable test execution in a CI environment.
+The project is integrated with **GitHub Actions** to enable automated and repeatable test execution 
+in a CI environment.
 
 ### CI capabilities:
 - Separate GitHub Actions workflows for:
