@@ -15,7 +15,6 @@ real-world QA Automation projects.
 
 - Java 21
 - Maven 3.9+
-- Node.js
 - Chrome/Firefox/Safari browsers (for web tests)
 - Appium 3.x (for mobile tests)
 - Android device with ADB enabled (for mobile tests)
