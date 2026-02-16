@@ -14,7 +14,6 @@ real-world QA Automation projects.
 - macOS Accessibility permissions enabled for Terminal (and IDE if used)
 - Java 21
 - Maven 3.9+
-- Node.js
 - Appium 3.x
 - Appium Mac2 driver installed
 
