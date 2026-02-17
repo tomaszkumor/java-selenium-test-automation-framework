@@ -9,7 +9,7 @@ import models.web.landingPage.searchBarVisa.SearchBarVisa;
 
 import static utils.logger.Log4J.log;
 
-public class LandingPage extends LandingPageLocators {
+public class LandingPage extends LandingPageSelectors {
     public LandingPage() {
         checkUrl();
         log.info("Landing page has been displayed.");

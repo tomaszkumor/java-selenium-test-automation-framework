@@ -4,7 +4,7 @@ package models.web.landingPage.searchBarHotels;
 //import org.openqa.selenium.WebElement;
 //import org.openqa.selenium.support.FindBy;
 
-public class SearchBarHotelsLocators {
+public class SearchBarHotelsSelectors {
 //    @FindBy(xpath = "//ul[@id = 'tab']//button[@data-bs-target = '#tab-hotels']")
 //    WebElement hotelsTab;
 //    @FindBy(xpath = "//div[@id = 'tab-hotels']")

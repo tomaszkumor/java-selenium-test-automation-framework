@@ -1,0 +1,17 @@
+{
+  "name": "ts-playwright-test-automation-framework",
+  "version": "1.0.0",
+  "description": "TypeScript - Playwright - Test Automation Framework",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:smoke": "playwright test SmokeTest",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.42.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0"
+  }
+}

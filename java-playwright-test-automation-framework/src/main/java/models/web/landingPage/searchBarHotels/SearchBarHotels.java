@@ -6,7 +6,7 @@ import models.web.menu.hotelsPage.hotelsSearchPage.HotelsSearchPage;
 
 import static utils.logger.Log4J.log;
 
-public class SearchBarHotels extends SearchBarHotelsLocators {
+public class SearchBarHotels extends SearchBarHotelsSelectors {
     public SearchBarHotels() {
 //        checkIfTabIsActive();
 //        checkIfSearchBarIsDisplayed();
