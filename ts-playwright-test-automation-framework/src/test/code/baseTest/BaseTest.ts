@@ -128,15 +128,13 @@ export class BaseTest {
     // Tworzymy nowy context i page dla każdego testu
     public async beforeSuite() {
         console.log("FRAMEWORK: PLAYWRIGHT");
-        if (TestStackProperties.getPlatform() === 'web') {
-            await this.launchBrowser();
-        }
     }
 
-    // Nowy context i page dla pojedynczego testu
     public async beforeMethod() {
         this.logAll();
+
         if (TestStackProperties.getPlatform() === 'web') {
+            await this.launchBrowser();      // 🔥 przeniesione tutaj
             await this.createTestContext();
         }
     }
@@ -144,14 +142,9 @@ export class BaseTest {
     public async afterMethod() {
         if (TestStackProperties.getPlatform() === 'web') {
             const context = PageManager.getContext();
-            await context.close(); // zamyka context i wszystkie strony w nim
+            await context.close();
+            await this.browser.close();     // 🔥 zamykamy browser per test
             PageManager.clear();
-        }
-    }
-
-    public async afterSuite() {
-        if (TestStackProperties.getPlatform() === 'web') {
-            await this.browser.close();
         }
     }
 

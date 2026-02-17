@@ -36,10 +36,6 @@ test.describe('My Example Tests', () => {
         await baseTest.afterMethod();
     });
 
-    test.afterAll(async () => {
-        await baseTest.afterSuite();
-    });
-
     test('Test Login Flow', async () => {
         await baseTest.testLogin();
     });
