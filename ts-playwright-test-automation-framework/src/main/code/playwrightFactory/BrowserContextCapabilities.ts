@@ -1,5 +1,4 @@
 import { BrowserContextOptions } from 'playwright';
-import { WebProperties } from './WebProperties';
 
 export class BrowserContextCapabilities {
     private static readonly DEFAULT_LOCALE = 'pl-PL';

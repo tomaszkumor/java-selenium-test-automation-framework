@@ -2,7 +2,7 @@
 environment: ENV1
 
 # web / api
-platform: web
+platform: api
 
 web:
   # chromium / firefox / webkit

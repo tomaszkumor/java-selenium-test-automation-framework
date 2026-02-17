@@ -1,5 +1,5 @@
-import fs from "fs";
-import yaml from "js-yaml";
+import * as fs from "fs";
+import * as yaml from "js-yaml";
 
 export class ConfigManager {
   private readonly config: Record<string, any> = {};
@@ -11,11 +11,13 @@ export class ConfigManager {
   public loadFileSettings(fileName: string): void {
     try {
       const fileContent = fs.readFileSync(fileName, "utf8");
-      const loadedYaml = yaml.load(fileContent) as Record<string, any>;
-      this.updateMap(this.config, loadedYaml);
-    } catch (e) {
-      console.warn(`Cannot load file ${fileName}`);
+      const loadedYaml = yaml.load(fileContent) as Record<string, any> | undefined;
 
+      if (loadedYaml) {
+        this.updateMap(this.config, loadedYaml);
+      }
+    } catch (e) {
+      console.warn(`Cannot load file ${fileName}:`, (e as Error).message);
       throw new Error("Failed to load configuration");
     }
   }
@@ -24,10 +26,7 @@ export class ConfigManager {
     Object.entries(sourceMap).forEach(([key, sourceValue]) => {
       const destValue = destMap[key];
 
-      if (
-        this.isObject(sourceValue) &&
-        this.isObject(destValue)
-      ) {
+      if (this.isObject(sourceValue) && this.isObject(destValue)) {
         this.updateMap(destValue, sourceValue);
       } else {
         destMap[key] = sourceValue;
@@ -52,7 +51,6 @@ export class ConfigManager {
 
   private getSubMap(config: Record<string, any>, key: string): Record<string, any> | null {
     const value = config[key];
-
     return this.isObject(value) ? value : null;
   }
 

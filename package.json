@@ -20,6 +20,7 @@
   "homepage": "https://github.com/tomaszkumor/test-automation-frameworks-portfolio#readme",
   "devDependencies": {
     "@playwright/test": "^1.58.2",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.2.3"
   },
   "dependencies": {

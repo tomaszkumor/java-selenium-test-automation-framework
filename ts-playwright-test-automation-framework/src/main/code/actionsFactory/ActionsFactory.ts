@@ -1,4 +1,3 @@
-import { Page } from 'playwright';
 import { CheckActions } from '../actions/CheckActions'
 import { ClickActions } from '../actions/ClickActions'
 import { GetActions } from '../actions/GetActions'
