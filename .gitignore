@@ -18,3 +18,8 @@ target/
 
 ### Mac OS ###
 .DS_Store
+
+### VSC ###
+node_modules/
+test-results/
+playwright-report/
