@@ -3,7 +3,7 @@ import { PetStoreDP } from '../../dataProviders/api/PetStoreDP';
 
 DataProviderRegistry.register(
   'sendPostRequestPetAndCheckStatusCode',
-  PetStoreDP.sendPostRequestPetAndCheckStatusCode
+  () => PetStoreDP.sendPostRequestPetAndCheckStatusCode('sendPostRequestPetAndCheckStatusCode')
 );
 
 DataProviderRegistry.register(
@@ -13,12 +13,12 @@ DataProviderRegistry.register(
 
 DataProviderRegistry.register(
   'sendGetRequestPetFindByIdAndCheckResponse',
-  PetStoreDP.sendGetRequestPetFindByIdAndCheckResponse
+  () => PetStoreDP.sendGetRequestPetFindByIdAndCheckResponse('sendGetRequestPetFindByIdAndCheckResponse')
 );
 
 DataProviderRegistry.register(
   'sendPutRequestPetAndCheckStatusCode',
-  PetStoreDP.sendPutRequestPetAndCheckStatusCode
+  () => PetStoreDP.sendPutRequestPetAndCheckStatusCode('sendPutRequestPetAndCheckStatusCode')
 );
 
 DataProviderRegistry.register(
@@ -28,12 +28,12 @@ DataProviderRegistry.register(
 
 DataProviderRegistry.register(
   'sendPostRequestStoreOrderAndCheckStatusCode',
-  PetStoreDP.sendPostRequestStoreOrderAndCheckStatusCode
+  () => PetStoreDP.sendPostRequestStoreOrderAndCheckStatusCode('sendPostRequestStoreOrderAndCheckStatusCode')
 );
 
 DataProviderRegistry.register(
   'sendGetRequestStoreOrderAndCheckResponse',
-  PetStoreDP.sendGetRequestStoreOrderAndCheckResponse
+  () => PetStoreDP.sendGetRequestStoreOrderAndCheckResponse('sendGetRequestStoreOrderAndCheckResponse')
 );
 
 DataProviderRegistry.register(
@@ -48,17 +48,17 @@ DataProviderRegistry.register(
 
 DataProviderRegistry.register(
   'sendPostRequestUserAndCheckResponse',
-  PetStoreDP.sendPostRequestUserAndCheckResponse
+  () => PetStoreDP.sendPostRequestUserAndCheckResponse('sendPostRequestUserAndCheckResponse')
 );
 
 DataProviderRegistry.register(
   'sendGetRequestUserAndCheckResponse',
-  PetStoreDP.sendGetRequestUserAndCheckResponse
+  () => PetStoreDP.sendGetRequestUserAndCheckResponse('sendGetRequestUserAndCheckResponse')
 );
 
 DataProviderRegistry.register(
   'sendPutRequestUserAndCheckStatusCode',
-  PetStoreDP.sendPutRequestUserAndCheckStatusCode
+  () => PetStoreDP.sendPutRequestUserAndCheckStatusCode('sendPutRequestUserAndCheckStatusCode')
 );
 
 DataProviderRegistry.register(

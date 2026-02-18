@@ -6,8 +6,8 @@ import { UserModel } from '../../dataProvidersModels/api/UserModel';
 import { TestConfig } from '../../../config/TestConfig';
 
 export class PetStoreDP {
-  static sendPostRequestPetAndCheckStatusCode(): PetStoreModel {
-    let apiRequestBodyPath: string = TestConfig.CONFIG.getProperty("apiFilesPaths.requestBody.postRequestPet")!;
+  static sendPostRequestPetAndCheckStatusCode(methodName: string): PetStoreModel {
+    let apiRequestBodyPath: string = this.getApiRequestBodyPathAccordingToTestName(methodName);
 
     return PetStoreModel
       .builder()
@@ -25,8 +25,8 @@ export class PetStoreDP {
       .build();
   }
 
-  static sendGetRequestPetFindByIdAndCheckResponse(): PetStoreModel {
-    let apiResponseBodyPath: string = TestConfig.CONFIG.getProperty("apiFilesPaths.responseBody.getRequestPetFindById")!;
+  static sendGetRequestPetFindByIdAndCheckResponse(methodName: string): PetStoreModel {
+    let apiResponseBodyPath: string = this.getApiResponseBodyPathAccordingToTestName(methodName);
     let petId: number = PetStoreDP.getPetId();
 
     return PetStoreModel
@@ -39,8 +39,8 @@ export class PetStoreDP {
       .build();
   }
 
-  static sendPutRequestPetAndCheckStatusCode(): PetStoreModel {
-    let apiRequestBodyPath: string = TestConfig.CONFIG.getProperty("apiFilesPaths.requestBody.putRequestPet")!;
+  static sendPutRequestPetAndCheckStatusCode(methodName: string): PetStoreModel {
+    let apiRequestBodyPath: string = this.getApiRequestBodyPathAccordingToTestName(methodName);
 
     return PetStoreModel
       .builder()
@@ -60,8 +60,8 @@ export class PetStoreDP {
       .build();
   }
 
-  static sendPostRequestStoreOrderAndCheckStatusCode(): PetStoreModel {
-    let apiRequestBodyPath: string = TestConfig.CONFIG.getProperty("apiFilesPaths.requestBody.postRequestStoreOrder")!;
+  static sendPostRequestStoreOrderAndCheckStatusCode(methodName: string): PetStoreModel {
+    let apiRequestBodyPath: string = this.getApiRequestBodyPathAccordingToTestName(methodName);
 
     return PetStoreModel
       .builder()
@@ -69,8 +69,8 @@ export class PetStoreDP {
       .build();
   }
 
-  static sendGetRequestStoreOrderAndCheckResponse(): PetStoreModel {
-    let apiResponseBodyPath: string = TestConfig.CONFIG.getProperty("apiFilesPaths.responseBody.getRequestStoreOrder")!;
+  static sendGetRequestStoreOrderAndCheckResponse(methodName: string): PetStoreModel {
+    let apiResponseBodyPath: string = this.getApiResponseBodyPathAccordingToTestName(methodName);
     let orderId: number = PetStoreDP.getOrderId();
 
     return PetStoreModel
@@ -109,9 +109,9 @@ export class PetStoreDP {
       .build();
   }
 
-  static sendPostRequestUserAndCheckResponse(): PetStoreModel {
-    let apiRequestBodyPath: string = TestConfig.CONFIG.getProperty("apiFilesPaths.requestBody.postRequestUser")!
-    let apiResponseBodyPath: string = TestConfig.CONFIG.getProperty("apiFilesPaths.responseBody.postRequestUser")!;
+  static sendPostRequestUserAndCheckResponse(methodName: string): PetStoreModel {
+    let apiRequestBodyPath: string = this.getApiRequestBodyPathAccordingToTestName(methodName);
+    let apiResponseBodyPath: string = this.getApiResponseBodyPathAccordingToTestName(methodName);
 
     return PetStoreModel
       .builder()
@@ -120,8 +120,8 @@ export class PetStoreDP {
       .build();
   }
 
-  static sendGetRequestUserAndCheckResponse(): PetStoreModel {
-    let apiResponseBodyPath: string = TestConfig.CONFIG.getProperty("apiFilesPaths.responseBody.getRequestUser")!;
+  static sendGetRequestUserAndCheckResponse(methodName: string): PetStoreModel {
+    let apiResponseBodyPath: string = this.getApiResponseBodyPathAccordingToTestName(methodName);
     let userName: string = PetStoreDP.getUserNameBeforeChange();
 
     return PetStoreModel
@@ -134,8 +134,8 @@ export class PetStoreDP {
       .build();
   }
 
-  static sendPutRequestUserAndCheckStatusCode(): PetStoreModel {
-    let apiRequestBodyPath: string = TestConfig.CONFIG.getProperty("apiFilesPaths.requestBody.putRequestUser")!;
+  static sendPutRequestUserAndCheckStatusCode(methodName: string): PetStoreModel {
+    let apiRequestBodyPath: string = this.getApiRequestBodyPathAccordingToTestName(methodName);
     let userName: string = PetStoreDP.getUserNameBeforeChange();
 
     return PetStoreModel
@@ -224,4 +224,39 @@ export class PetStoreDP {
         throw new Error(`Unknown environment: ${env}`);
     };
   }
+
+  private static getApiRequestBodyPathAccordingToTestName(methodName: string): string {
+    let partialYamlPath: string = "apiFilesPaths.requestBody";
+
+    switch (methodName) {
+      case "sendPostRequestUserAndCheckResponse":
+        return TestConfig.CONFIG.getProperty(partialYamlPath.concat(".postRequestUser"))!;
+      case "sendPutRequestUserAndCheckStatusCode":
+        return TestConfig.CONFIG.getProperty(partialYamlPath.concat(".putRequestUser"))!;
+      case "sendPostRequestPetAndCheckStatusCode":
+        return TestConfig.CONFIG.getProperty(partialYamlPath.concat(".postRequestPet"))!;
+      case "sendPutRequestPetAndCheckStatusCode":
+        return TestConfig.CONFIG.getProperty(partialYamlPath.concat(".putRequestPet"))!;
+      case "sendPostRequestStoreOrderAndCheckStatusCode":
+        return TestConfig.CONFIG.getProperty(partialYamlPath.concat(".postRequestStoreOrder"))!;
+      default: throw new Error(`'${methodName}' method does not exist.`);
+    };
+  }
+
+  private static getApiResponseBodyPathAccordingToTestName(methodName: string): string {
+    let partialYamlPath: string = "apiFilesPaths.responseBody";
+
+    switch (methodName) {
+      case "sendPostRequestUserAndCheckResponse":
+        return TestConfig.CONFIG.getProperty(partialYamlPath.concat(".postRequestUser"))!;
+      case "sendGetRequestUserAndCheckResponse":
+        return TestConfig.CONFIG.getProperty(partialYamlPath.concat(".getRequestUser"))!;
+      case "sendGetRequestPetFindByIdAndCheckResponse":
+        return TestConfig.CONFIG.getProperty(partialYamlPath.concat(".getRequestPetFindById"))!;
+      case "sendGetRequestStoreOrderAndCheckResponse":
+        return TestConfig.CONFIG.getProperty(partialYamlPath.concat(".getRequestStoreOrder"))!;
+      default: throw new Error(`'${methodName}' method does not exist.`);
+    };
+  }
+
 }
