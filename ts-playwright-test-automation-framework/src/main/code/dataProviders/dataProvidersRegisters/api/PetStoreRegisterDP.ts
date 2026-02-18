@@ -3,7 +3,7 @@ import { PetStoreDP } from '../../dataProviders/api/PetStoreDP';
 
 DataProviderRegistry.register(
   'sendPostRequestPetAndCheckStatusCode',
-  PetStoreDP.sendPostRequestPetAndCheckStatusCode()
+  PetStoreDP.sendPostRequestPetAndCheckStatusCode
 );
 
 DataProviderRegistry.register(

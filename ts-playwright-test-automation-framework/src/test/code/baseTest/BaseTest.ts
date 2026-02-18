@@ -106,6 +106,6 @@ export class BaseTest {
     }
 
     protected getModel<T>(dpName: string): T {
-    return DataProviderRegistry.get(dpName);
-}
+        return DataProviderRegistry.get(dpName);
+    }
 }
