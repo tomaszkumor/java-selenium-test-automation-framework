@@ -5,6 +5,8 @@ import { BrowserContextCapabilities } from '../../../main/code/playwrightFactory
 import { LaunchOptionsCapabilities } from '../../../main/code/playwrightFactory/LaunchOptionsCapabilities';
 import { PageManager } from '../../../main/code/playwrightFactory/PageManager';
 import { ApiProperties } from '../../../main/code/playwrightFactory/ApiProperties';
+import { DataProviderRegistry } from '../../../main/code/utils/dataProviderRegistry/DataProviderRegistry';
+import '../../../main/code/dataProviders/dataProvidersRegisters/api/PetStoreRegisterDP'
 
 export class BaseTest {
     protected browser!: Browser;
@@ -102,4 +104,8 @@ export class BaseTest {
     private logAllForApi(): void {
         console.log("DEBUG MODE: " + ApiProperties.isDebugMode());
     }
+
+    protected getModel<T>(dpName: string): T {
+    return DataProviderRegistry.get(dpName);
+}
 }

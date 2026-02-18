@@ -1,15 +1,16 @@
 import { APIResponse, APIRequestContext } from "playwright"
 import { POJOPet } from "../pojo/POJOPet";
 import { ContextOptionsBuilder } from "../../../utils/contextOptionsBuilder/ContextOptionsBuilder";
+import { PetStoreModel } from "../../../dataProviders/dataProvidersModels/api/PetStoreModel";
 
 export class EndpointPet {
     private response!: APIResponse;
     private request!: APIRequestContext;
     private pojoPet!: POJOPet;
 
-    public async sendPostRequestPet(): Promise<EndpointPet> {
+    public async sendPostRequestPet(model: PetStoreModel): Promise<EndpointPet> {
         this.request = await ContextOptionsBuilder.buildBasicRequestContextOptions();
-        let requestBody: string = this.getExpectedRequestBodyFromFile();
+        let requestBody: string = this.getExpectedRequestBodyFromFile(model);
         let requestEndpointUrl: string = "pet";
 
         this.response = await this.request
@@ -20,22 +21,26 @@ export class EndpointPet {
         return this;
     }
 
-    public async sendGetRequestPetFindByStatus(): Promise<EndpointPet> {
+    public async sendGetRequestPetFindByStatus(model: PetStoreModel): Promise<EndpointPet> {
         this.request = await ContextOptionsBuilder.buildBasicRequestContextOptions();
-        let petStatus: string = this.getExpectedPetStatusFromDataProvider();
+        let petStatus: string = this.getExpectedPetStatusFromDataProvider(model);
         let requestEndpointUrl: string = "pet/findByStatus";
 
         this.response = await this.request
-            .get(requestEndpointUrl, { params: { status: petStatus } })
+            .get(requestEndpointUrl, {
+                params: {
+                    status: petStatus
+                }
+            })
 
         await this.checkRequestStatus(this.response);
 
         return this;
     }
 
-    public async sendGetRequestPetFindById(): Promise<EndpointPet> {
+    public async sendGetRequestPetFindById(model: PetStoreModel): Promise<EndpointPet> {
         this.request = await ContextOptionsBuilder.buildBasicRequestContextOptions();
-        let petId: number = this.getExpectedPetIdFromDataProvider();
+        let petId: number = this.getExpectedPetIdFromDataProvider(model);
         let requestEndpointUrl: string = `pet/${petId}`;
 
         this.response = await this.request
@@ -48,9 +53,9 @@ export class EndpointPet {
         return this;
     }
 
-    public async sendPutRequestPet(): Promise<EndpointPet> {
+    public async sendPutRequestPet(model: PetStoreModel): Promise<EndpointPet> {
         this.request = await ContextOptionsBuilder.buildBasicRequestContextOptions();
-        let requestBody: string = this.getExpectedRequestBodyFromFile2();
+        let requestBody: string = this.getExpectedRequestBodyFromFile(model);
         let requestEndpointUrl: string = "pet";
 
         this.response = await this.request
@@ -61,9 +66,9 @@ export class EndpointPet {
         return this;
     }
 
-    public async sendDeleteRequestPet(): Promise<EndpointPet> {
+    public async sendDeleteRequestPet(model: PetStoreModel): Promise<EndpointPet> {
         this.request = await ContextOptionsBuilder.buildAuthorizedRequestContextOptions();
-        let petId: number = this.getExpectedPetIdFromDataProvider();
+        let petId: number = this.getExpectedPetIdFromDataProvider(model);
         let requestEndpointUrl: string = `pet/${petId}`;
 
         this.response = await this.request
@@ -82,29 +87,23 @@ export class EndpointPet {
         }
     }
 
-    private getExpectedPetIdFromDataProvider(): number {
-        return 909091666;
+    private getExpectedPetIdFromDataProvider(model: PetStoreModel): number {
+        return model.pet?.id!;
     }
 
-    private getExpectedPetStatusFromDataProvider(): string {
-        //TODO: trzeba to pobrac z dataprovidera
-        return "available";
+    private getExpectedPetStatusFromDataProvider(model: PetStoreModel): string {
+        return model.pet?.status!;
     }
 
-    private getExpectedRequestBodyFromFile(): string {
-        let requestBodyPath: string = "src/main/resources/api/env1/request/PostRequestPet_requestBody.json";
-        //TODO: trzeba to pobrac z dataprovidera
+    private getExpectedRequestBodyFromFile(model: PetStoreModel): string {
+        let requestBodyPath: string = this.getExpectedApiRequestBodyPathFromDataProvider(model);
         let pojoPet: POJOPet = POJOPet.fromFile(requestBodyPath);
 
         return JSON.stringify(pojoPet);
     }
 
-    private getExpectedRequestBodyFromFile2(): string {
-        let requestBodyPath: string = "src/main/resources/api/env1/request/PutRequestPet_requestBody.json";
-        //TODO: trzeba to pobrac z dataprovidera
-        let pojoPet: POJOPet = POJOPet.fromFile(requestBodyPath);
-
-        return JSON.stringify(pojoPet);
+    private getExpectedApiRequestBodyPathFromDataProvider(model: PetStoreModel): string {
+        return model.apiRequestBodyPath!;
     }
 
     public getResponse(): APIResponse {
@@ -114,12 +113,4 @@ export class EndpointPet {
     public getPOJOPet(): POJOPet {
         return this.pojoPet;
     }
-
-
-
-
-
-
-
-
 }
