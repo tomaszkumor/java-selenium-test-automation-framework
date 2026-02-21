@@ -7,7 +7,7 @@ export class Date {
         private readonly name: string
     ) { }
 
-    getname(): string {
+    getName(): string {
         return this.name;
     }
 }

@@ -10,7 +10,7 @@ export class VisaType {
         private readonly name: string
     ) { }
 
-    getName(): String {
+    getName(): string {
         return this.name;
     }
 }

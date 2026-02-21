@@ -1,12 +1,15 @@
 import { Locator } from '@playwright/test';
 import { PageManager } from '../playwrightFactory/PageManager';
+import { logger } from "../utils/logger/Logger";
 
 export class ClickActions {
+    private log = logger.child({ label: ClickActions.name });
+
     public async leftClick(selector: string, selectorName: string): Promise<void> {
         try {
-            const locator: Locator = this.getLocator(selector);
+            const locator: Locator = await this.getLocator(selector);
             await locator.click();
-            console.log(`${selectorName} has been clicked.`);
+            this.log.debug(`${selectorName} has been clicked.`);
         } catch (e: any) {
             throw new Error(`Unable to click on ${selectorName}: ${e.message}`);
         }
@@ -14,9 +17,9 @@ export class ClickActions {
 
     public async forceLeftClick(selector: string, selectorName: string): Promise<void> {
         try {
-            const locator: Locator = this.getLocator(selector);
+            const locator: Locator = await this.getLocator(selector);
             await locator.click({ force: true });
-            console.log(`${selectorName} has been forced to clicked.`);
+            this.log.debug(`${selectorName} has been forced to clicked.`);
         } catch (e: any) {
             throw new Error(`Unable to force left click on ${selectorName}: ${e.message}`);
         }
@@ -24,9 +27,9 @@ export class ClickActions {
 
     public async doubleLeftClick(selector: string, selectorName: string): Promise<void> {
         try {
-            const locator: Locator = this.getLocator(selector);
+            const locator: Locator = await this.getLocator(selector);
             await locator.dblclick();
-            console.log(`${selectorName} has been double clicked.`);
+            this.log.debug(`${selectorName} has been double clicked.`);
         } catch (e: any) {
             throw new Error(`Unable to double click on ${selectorName}: ${e.message}`);
         }
@@ -34,9 +37,9 @@ export class ClickActions {
 
     public async rightClick(selector: string, selectorName: string): Promise<void> {
         try {
-            const locator: Locator = this.getLocator(selector);
+            const locator: Locator = await this.getLocator(selector);
             await locator.click({ button: 'right' });
-            console.log(`${selectorName} has been right clicked.`);
+            this.log.debug(`${selectorName} has been right clicked.`);
         } catch (e: any) {
             throw new Error(`Unable to right click on ${selectorName}: ${e.message}`);
         }
@@ -44,9 +47,9 @@ export class ClickActions {
 
     public async clickOnSelectOption(selectionBoxSelector: string, optionToSelect: string, selectorName: string): Promise<void> {
         try {
-            const locator: Locator = this.getLocator(selectionBoxSelector);
+            const locator: Locator = await this.getLocator(selectionBoxSelector);
             await locator.selectOption(optionToSelect);
-            console.log(`${optionToSelect} has been selected in ${selectorName}.`);
+            this.log.debug(`${optionToSelect} has been selected in ${selectorName}.`);
         } catch (e: any) {
             throw new Error(`Unable to select option in ${selectorName}: ${e.message}`);
         }
@@ -66,9 +69,9 @@ export class ClickActions {
 
     private async checkCheckboxOrRadioButton(selector: string, selectorName: string): Promise<void> {
         try {
-            const locator: Locator = this.getLocator(selector);
+            const locator: Locator = await this.getLocator(selector);
             await locator.check();
-            console.log(`${selectorName} has been checked.`);
+            this.log.debug(`${selectorName} has been checked.`);
         } catch (e: any) {
             throw new Error(`Unable to check ${selectorName}: ${e.message}`);
         }
@@ -76,15 +79,15 @@ export class ClickActions {
 
     private async uncheckCheckboxOrRadioButton(selector: string, selectorName: string): Promise<void> {
         try {
-            const locator: Locator = this.getLocator(selector);
+            const locator: Locator = await this.getLocator(selector);
             await locator.uncheck();
-            console.log(`${selectorName} has been unchecked.`);
+            this.log.debug(`${selectorName} has been unchecked.`);
         } catch (e: any) {
             throw new Error(`Unable to uncheck ${selectorName}: ${e.message}`);
         }
     }
 
-    private getLocator(selector: string): Locator {
-        return PageManager.getPage().locator(selector);
+    private async getLocator(selector: string): Promise<Locator> {
+        return await PageManager.getPage().locator(selector);
     }
 }

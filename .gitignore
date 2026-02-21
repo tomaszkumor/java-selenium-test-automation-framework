@@ -25,3 +25,4 @@ target/
 node_modules/
 test-results/
 playwright-report/
+ts-playwright-test-automation-framework/test-results.json

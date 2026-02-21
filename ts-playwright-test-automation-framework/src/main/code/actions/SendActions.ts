@@ -1,13 +1,16 @@
 import { Locator } from '@playwright/test';
 import { PageManager } from '../playwrightFactory/PageManager';
+import { logger } from "../utils/logger/Logger";
 
 export class SendActions {
+    private log = logger.child({ label: SendActions.name });
+
     public async sendKeysToElement(selector: string, text: string, selectorName: string): Promise<void> {
         try {
             const locator: Locator = this.getLocator(selector);
             locator.clear();
             locator.fill(text);
-            console.log(`'${text}' has been typed to ${selectorName}.`);
+            this.log.debug(`'${text}' has been typed to ${selectorName}.`);
             this.sendKey(selector, "Tab");
         } catch (e: any) {
             throw new Error(`Unable to send keys to ${selectorName}: ${e.message}`);
@@ -19,7 +22,7 @@ export class SendActions {
             const locator: Locator = this.getLocator(selector);
             locator.clear();
             locator.fill(text);
-            console.log(`'${text}' has been typed to ${selectorName}.`);
+            this.log.debug(`'${text}' has been typed to ${selectorName}.`);
         } catch (e: any) {
             throw new Error(`Unable to send keys to ${selectorName}: ${e.message}`);
         }
@@ -28,7 +31,7 @@ export class SendActions {
     public async sendKey(selector: string, key: string): Promise<void> {
         try {
             PageManager.getPage().press(selector, key);
-            console.log(`'${key}' has been tapped.`);
+            this.log.debug(`'${key}' has been tapped.`);
         } catch (e: any) {
             throw new Error(`Unable to press ${key} key: ${e.message}`);
         }
@@ -38,7 +41,7 @@ export class SendActions {
         try {
             const locator: Locator = this.getLocator(selector);
             locator.setInputFiles(fileDirectory);
-            console.log(`File from directory '${fileDirectory}' has been attached to file picker input.`);
+            this.log.debug(`File from directory '${fileDirectory}' has been attached to file picker input.`);
         } catch (e: any) {
             throw new Error(`Unable to upload file from directory: ${fileDirectory}: ${e.message}`);
         }

@@ -6,8 +6,8 @@ import { UserModel } from '../../dataProvidersModels/api/UserModel';
 import { TestConfig } from '../../../config/TestConfig';
 
 export class PetStoreDP {
-  static sendPostRequestPetAndCheckStatusCode(methodName: string): PetStoreModel {
-    let apiRequestBodyPath: string = this.getApiRequestBodyPathAccordingToTestName(methodName);
+  static sendPostRequestPetAndCheckStatusCode(): PetStoreModel {
+    let apiRequestBodyPath: string = PetStoreDP.getApiRequestBodyPathAccordingToTestName(PetStoreDP.sendPostRequestPetAndCheckStatusCode.name);
 
     return PetStoreModel
       .builder()
@@ -25,8 +25,8 @@ export class PetStoreDP {
       .build();
   }
 
-  static sendGetRequestPetFindByIdAndCheckResponse(methodName: string): PetStoreModel {
-    let apiResponseBodyPath: string = this.getApiResponseBodyPathAccordingToTestName(methodName);
+  static sendGetRequestPetFindByIdAndCheckResponse(): PetStoreModel {
+    let apiResponseBodyPath: string = PetStoreDP.getApiResponseBodyPathAccordingToTestName(PetStoreDP.sendGetRequestPetFindByIdAndCheckResponse.name);
     let petId: number = PetStoreDP.getPetId();
 
     return PetStoreModel
@@ -39,8 +39,8 @@ export class PetStoreDP {
       .build();
   }
 
-  static sendPutRequestPetAndCheckStatusCode(methodName: string): PetStoreModel {
-    let apiRequestBodyPath: string = this.getApiRequestBodyPathAccordingToTestName(methodName);
+  static sendPutRequestPetAndCheckStatusCode(): PetStoreModel {
+    let apiRequestBodyPath: string = PetStoreDP.getApiRequestBodyPathAccordingToTestName(PetStoreDP.sendPutRequestPetAndCheckStatusCode.name);
 
     return PetStoreModel
       .builder()
@@ -60,8 +60,8 @@ export class PetStoreDP {
       .build();
   }
 
-  static sendPostRequestStoreOrderAndCheckStatusCode(methodName: string): PetStoreModel {
-    let apiRequestBodyPath: string = this.getApiRequestBodyPathAccordingToTestName(methodName);
+  static sendPostRequestStoreOrderAndCheckStatusCode(): PetStoreModel {
+    let apiRequestBodyPath: string = PetStoreDP.getApiRequestBodyPathAccordingToTestName(PetStoreDP.sendPostRequestStoreOrderAndCheckStatusCode.name);
 
     return PetStoreModel
       .builder()
@@ -69,8 +69,8 @@ export class PetStoreDP {
       .build();
   }
 
-  static sendGetRequestStoreOrderAndCheckResponse(methodName: string): PetStoreModel {
-    let apiResponseBodyPath: string = this.getApiResponseBodyPathAccordingToTestName(methodName);
+  static sendGetRequestStoreOrderAndCheckResponse(): PetStoreModel {
+    let apiResponseBodyPath: string = PetStoreDP.getApiResponseBodyPathAccordingToTestName(PetStoreDP.sendGetRequestStoreOrderAndCheckResponse.name);
     let orderId: number = PetStoreDP.getOrderId();
 
     return PetStoreModel
@@ -109,9 +109,9 @@ export class PetStoreDP {
       .build();
   }
 
-  static sendPostRequestUserAndCheckResponse(methodName: string): PetStoreModel {
-    let apiRequestBodyPath: string = this.getApiRequestBodyPathAccordingToTestName(methodName);
-    let apiResponseBodyPath: string = this.getApiResponseBodyPathAccordingToTestName(methodName);
+  static sendPostRequestUserAndCheckResponse(): PetStoreModel {
+    let apiRequestBodyPath: string = PetStoreDP.getApiRequestBodyPathAccordingToTestName(PetStoreDP.sendPostRequestUserAndCheckResponse.name);
+    let apiResponseBodyPath: string = PetStoreDP.getApiResponseBodyPathAccordingToTestName(PetStoreDP.sendPostRequestUserAndCheckResponse.name);
 
     return PetStoreModel
       .builder()
@@ -120,8 +120,8 @@ export class PetStoreDP {
       .build();
   }
 
-  static sendGetRequestUserAndCheckResponse(methodName: string): PetStoreModel {
-    let apiResponseBodyPath: string = this.getApiResponseBodyPathAccordingToTestName(methodName);
+  static sendGetRequestUserAndCheckResponse(): PetStoreModel {
+    let apiResponseBodyPath: string = PetStoreDP.getApiResponseBodyPathAccordingToTestName(PetStoreDP.sendGetRequestUserAndCheckResponse.name);
     let userName: string = PetStoreDP.getUserNameBeforeChange();
 
     return PetStoreModel
@@ -134,8 +134,8 @@ export class PetStoreDP {
       .build();
   }
 
-  static sendPutRequestUserAndCheckStatusCode(methodName: string): PetStoreModel {
-    let apiRequestBodyPath: string = this.getApiRequestBodyPathAccordingToTestName(methodName);
+  static sendPutRequestUserAndCheckStatusCode(): PetStoreModel {
+    let apiRequestBodyPath: string = PetStoreDP.getApiRequestBodyPathAccordingToTestName(PetStoreDP.sendPutRequestUserAndCheckStatusCode.name);
     let userName: string = PetStoreDP.getUserNameBeforeChange();
 
     return PetStoreModel

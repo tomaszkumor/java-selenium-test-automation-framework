@@ -1,4 +1,4 @@
-import { Browser, chromium, firefox, webkit } from '@playwright/test';
+import { Browser, chromium, expect, firefox, webkit } from '@playwright/test';
 import { TestStackProperties } from '../../../main/code/config/TestStackProperties';
 import { WebProperties } from '../../../main/code/playwrightFactory/WebProperties';
 import { BrowserContextCapabilities } from '../../../main/code/playwrightFactory/BrowserContextCapabilities';
@@ -6,13 +6,17 @@ import { LaunchOptionsCapabilities } from '../../../main/code/playwrightFactory/
 import { PageManager } from '../../../main/code/playwrightFactory/PageManager';
 import { ApiProperties } from '../../../main/code/playwrightFactory/ApiProperties';
 import { DataProviderRegistry } from '../../../main/code/utils/dataProviderRegistry/DataProviderRegistry';
+import { logger } from "../../../../src/main/code/utils/logger/Logger";
 import '../../../main/code/dataProviders/dataProvidersRegisters/api/PetStoreRegisterDP'
+import '../../../main/code/dataProviders/dataProvidersRegisters/web/LandingPageRegisterDP'
+import { TestConfig } from '../../../main/code/config/TestConfig';
 
 export class BaseTest {
+    private log = logger.child({ label: BaseTest.name });
     protected browser!: Browser;
 
     public async beforeSuite() {
-        console.log("FRAMEWORK: PLAYWRIGHT");
+        this.log.info("FRAMEWORK: PLAYWRIGHT");
     }
 
     public async beforeMethod() {
@@ -26,10 +30,19 @@ export class BaseTest {
 
     public async afterMethod() {
         if (TestStackProperties.getPlatform() === 'web') {
-            const context = PageManager.getContext();
-            await context.close();
-            await this.browser.close();
-            PageManager.clear();
+            if (!WebProperties.isDebugMode()) {
+                const context = PageManager.getContext();
+                await context.close();
+                this.log.debug("Context has been closed via PageManager.")
+
+                await this.browser.close();
+                this.log.debug("Browser has been closed.")
+
+                PageManager.clear();
+                this.log.debug("Page and context have been cleared via PageManager.")
+            } else {
+                await PageManager.getPage().pause();
+            }
         }
     }
 
@@ -51,6 +64,8 @@ export class BaseTest {
                 this.browser = await webkit.launch(launchOptions);
                 break;
         }
+
+        this.log.debug("Browser has been launched.")
     }
 
     private async createTestContext(): Promise<void> {
@@ -70,9 +85,16 @@ export class BaseTest {
         }
 
         const context = await this.browser.newContext(contextOptions);
+        this.log.debug("Context has been set via PageManager.")
+
         const page = await context.newPage();
+        this.log.debug("Page has been opened.")
 
         PageManager.setContextAndPage(context, page);
+        this.log.debug("Context and page have been set via PageManager.")
+
+        page.goto(TestStackProperties.getWebUrl());
+        this.log.debug(`Page has been opened with url: ${TestStackProperties.getWebUrl()}.`)
     }
 
     private logAll(): void {
@@ -90,19 +112,19 @@ export class BaseTest {
     }
 
     private logAllForEachPlatform(platform: string): void {
-        console.log("ENV: " + TestStackProperties.getEnvironment());
-        console.log("FRAMEWORK: " + platform.toUpperCase());
+        this.log.info("ENV: " + TestStackProperties.getEnvironment());
+        this.log.info("FRAMEWORK: " + platform.toUpperCase());
     }
 
     private logAllForWeb(): void {
-        console.log("ENGINE: " + WebProperties.getEngine().toUpperCase());
-        console.log("HEADLESS MODE: " + WebProperties.isHeadlessMode());
-        console.log("REMOTE MODE: " + WebProperties.isRemoteMode());
-        console.log("DEBUG MODE: " + WebProperties.isDebugMode());
+        this.log.info("ENGINE: " + WebProperties.getEngine().toUpperCase());
+        this.log.info("HEADLESS MODE: " + WebProperties.isHeadlessMode());
+        this.log.info("REMOTE MODE: " + WebProperties.isRemoteMode());
+        this.log.info("DEBUG MODE: " + WebProperties.isDebugMode());
     }
 
     private logAllForApi(): void {
-        console.log("DEBUG MODE: " + ApiProperties.isDebugMode());
+        this.log.info("DEBUG MODE: " + ApiProperties.isDebugMode());
     }
 
     protected getModel<T>(dpName: string): T {

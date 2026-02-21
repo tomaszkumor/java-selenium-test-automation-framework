@@ -7,7 +7,7 @@ export class Traveller {
         private readonly name: string
     ) { }
 
-    getName(): String {
+    getName(): string {
         return this.name;
     }
 }

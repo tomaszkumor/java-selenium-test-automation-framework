@@ -8,7 +8,7 @@ export class FlightClass {
         private readonly name: string
     ) { }
 
-    getName(): String {
+    getName(): string {
         return this.name;
     }
 }

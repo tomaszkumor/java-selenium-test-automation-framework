@@ -136,7 +136,7 @@ export class GetActions {
         }
     }
 
-    private getLocator(selector: string): Locator {
+    public getLocator(selector: string): Locator {
         return PageManager.getPage().locator(selector);
     }
 }

@@ -6,7 +6,7 @@ export class LocationType {
         private readonly name: string
     ) { }
 
-    getName(): String {
+    getName(): string {
         return this.name;
     }
 }

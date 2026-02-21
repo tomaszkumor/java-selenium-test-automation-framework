@@ -1,16 +1,16 @@
 import { test } from '@playwright/test';
-import { MyTest } from '../../../code/tests/web/PhpTravelsTest';
+import { PhpTravelsTest } from '../../../code/tests/web/PhpTravelsTest';
 
 test.describe('My Example Tests', () => {
-    let baseTest: MyTest;
+    let baseTest: PhpTravelsTest;
 
     test.beforeAll(async () => {
-        baseTest = new MyTest();
+        baseTest = new PhpTravelsTest();
         await baseTest.beforeSuite();
     });
 
     test.beforeEach(async () => {
-        baseTest = new MyTest();
+        baseTest = new PhpTravelsTest();
         await baseTest.beforeMethod();
     });
 
@@ -18,11 +18,11 @@ test.describe('My Example Tests', () => {
         await baseTest.afterMethod();
     });
 
-    test('Test Login Flow', async () => {
-        await baseTest.testLogin();
+    test('Web. Search for visa via landing page search bar', async () => {
+        await baseTest.searchForVisa();
     });
 
-    test('Test Logout Flow', async () => {
-        await baseTest.testLogout();
+    test('Web. Search for flights via landing page search bar', async () => {
+        await baseTest.searchForFlights();
     });
 });
