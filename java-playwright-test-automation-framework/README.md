@@ -14,7 +14,6 @@ real-world QA Automation projects.
 
 - Java 21
 - Maven 3.9+
-- Node.js
 - Chromium, Firefox, WebKit engines
 
 ## How to run
