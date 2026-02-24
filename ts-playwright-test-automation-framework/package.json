@@ -4,10 +4,10 @@
   "description": "TypeScript - Playwright - Test Automation Framework",
   "scripts": {
     "test": "playwright test",
-    "test:headed": "playwright test --headed",
-    "test:debug": "playwright test --debug",
-    "test:smoke": "playwright test SmokeTest",
-    "report": "playwright show-report"
+    "test:api": "playwright test src/test/resources/testSuites/api/PetStoreTest.test.ts",
+    "test:web": "playwright test src/test/resources/testSuites/web/PhpTravelsTest.test.ts",
+    "report": "playwright show-report",
+    "show-report-latest": "node show-latest-report.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.42.0",

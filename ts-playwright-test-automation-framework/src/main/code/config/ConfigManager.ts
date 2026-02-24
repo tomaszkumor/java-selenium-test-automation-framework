@@ -59,11 +59,12 @@ export class ConfigManager {
   }
 
   public getProperty(propertyName: string): string | null {
-    const envValue = process.env[propertyName];
-    if (envValue !== undefined) {
-      return envValue;
-    }
+    const envKey = propertyName.toUpperCase().replace(/\./g, "_");
+    const envValue = process.env[envKey];
+    if (envValue !== undefined) return envValue;
 
     return this.findProperty(this.config, propertyName);
   }
 }
+
+
