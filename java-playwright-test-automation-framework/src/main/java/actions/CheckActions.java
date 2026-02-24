@@ -14,6 +14,7 @@ public class CheckActions {
     public void containsText(String selector, String expectedText, String selectorName) {
         Locator locator = getLocator(selector);
         PlaywrightAssertions.assertThat(locator).containsText(expectedText);
+        log.info("{} contains expectedValue: {}", selectorName, expectedText);
     }
 
     public void hasAttribute(String selector, String attributeName, String expectedAttributeValue, String selectorName) {
@@ -149,7 +150,7 @@ public class CheckActions {
     public void isUrlEqualTo(String expectedUrl) {
         Page page = getPlaywrightInstance().getPage();
         PlaywrightAssertions.assertThat(page).hasURL(expectedUrl);
-        log.debug("URL contains expected value.");
+        log.debug("URL equals to expected value.");
     }
 
     private Locator getLocator(String selector) {

@@ -2,7 +2,7 @@ package models.web.landingPage;
 
 import models.web.navigation.NavigationHeaderAndFooter;
 
-public class LandingPageLocators extends NavigationHeaderAndFooter {
+public class LandingPageSelectors extends NavigationHeaderAndFooter {
     String tabHotelsSelector = "//span[contains(text(), 'Hotels')]/ancestor::button[@role = 'tab']";
     String tabFlightsSelector = "//span[contains(text(), 'Flights')]/ancestor::button[@role = 'tab']";
     String tabToursSelector = "//span[contains(text(), 'Tours')]/ancestor::button[@role = 'tab']";

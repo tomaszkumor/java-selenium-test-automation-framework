@@ -1,0 +1,31 @@
+{
+  "name": "test-automation-frameworks-portfolio",
+  "version": "1.0.0",
+  "description": "This repository is a **portfolio of Java-based test automation frameworks**, demonstrating practical  knowledge of automated testing architecture, design patterns, configuration management, and scalability  considerations commonly used in real-world QA projects.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomaszkumor/test-automation-frameworks-portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tomaszkumor/test-automation-frameworks-portfolio/issues"
+  },
+  "homepage": "https://github.com/tomaszkumor/test-automation-frameworks-portfolio#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^25.2.3"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.1",
+    "playwright": "^1.58.2",
+    "winston": "^3.19.0"
+  }
+}

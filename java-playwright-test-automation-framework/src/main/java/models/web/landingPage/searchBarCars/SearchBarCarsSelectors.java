@@ -24,5 +24,4 @@ public class SearchBarCarsSelectors extends ActionsFactory {
     String airportSelector = "//div[@class = 'most--popular-cars-origin']/div";
     String h4Selector = "(//h4)[1]";
     String travellersWindowSelector = "//div[contains(@class, 'dropdown-menu') and contains(@style, 'block')]";
-
 }

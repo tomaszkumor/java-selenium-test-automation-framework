@@ -5,6 +5,8 @@ target/
 /java-selenium-test-automation-framework/allure-results
 /java-playwright-test-automation-framework/allure-results
 /java-desktop-macos-test-automation-framework/allure-results/
+/ts-playwright-test-automation-framework/test-results/
+
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
@@ -18,3 +20,9 @@ target/
 
 ### Mac OS ###
 .DS_Store
+
+### VSC ###
+node_modules/
+test-results/
+playwright-report/
+ts-playwright-test-automation-framework/test-results.json
