@@ -101,6 +101,7 @@ Runtime behavior can be controlled via YAML configuration files and optional Mav
 test-automation-frameworks-portfolio
  ├── java-playwright-test-automation-framework
  ├── java-selenium-test-automation-framework
+ ├── ts-playwright-test-automation-framework
  ├── java-desktop-macos-test-automation-framework
  │    ├── allure-results  
  │    ├── src

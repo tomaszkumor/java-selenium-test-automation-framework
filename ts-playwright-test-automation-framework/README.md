@@ -12,9 +12,9 @@ real-world QA Automation projects.
 
 ## Environment Requirements
 
-- TypeScript 5.9.x
-- Node.js 25.4.x
-- npm 11.7.x
+- TypeScript 5+ (tested on 5.9.2)
+- Node.js 18+ (tested on 25.4.0)
+- npm 9+ (tested on 11.7.0)
 - Chromium, Firefox, WebKit engines
 - Winston logger
 

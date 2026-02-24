@@ -1,12 +1,12 @@
 # Test Automation Frameworks Portfolio
 
 ## Overview
-This repository is a **portfolio of Java-based test automation frameworks**, demonstrating practical 
-knowledge of automated testing architecture, design patterns, configuration management, and scalability 
-considerations commonly used in real-world QA projects.
+This repository is a **portfolio of test automation frameworks built in multiple languages**, 
+demonstrating practical knowledge of automated testing architecture, design patterns, 
+configuration management, and scalability considerations commonly used in real-world QA projects.
 
-The project contains multiple test automation frameworks, each implemented as a **separate Maven module**, 
-focusing on different automation technologies and testing types (web, mobile, API).
+The project contains multiple test automation frameworks, each implemented as a **separate module**, 
+focusing on different automation technologies and testing types (web, mobile, API, desktop).
 
 ## Modules
 
@@ -24,6 +24,11 @@ focusing on different automation technologies and testing types (web, mobile, AP
 ### [Java Desktop macOS Test Automation Framework](java-desktop-macos-test-automation-framework/README.md)
 - Test automation for:
   - desktop applications with Appium
+
+### [TypeScript Playwright Test Automation Framework](ts-playwright-test-automation-framework/README.md)
+- Test automation for:
+  - web application with Playwright
+  - REST API with Playwright
 
 ## Purpose
 The goal of this portfolio is to demonstrate skills in QA automation:
@@ -54,6 +59,7 @@ test-automation-frameworks-portfolio
  ├── java-playwright-test-automation-framework
  ├── java-selenium-test-automation-framework
  ├── java-desktop-macos-test-automation-framework
+ ├── ts-playwright-test-automation-framework
  ├── pom.xml (parent POM for multi-module project)
  └── README.md (main overview README file)
 ```

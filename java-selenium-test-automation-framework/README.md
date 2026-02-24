@@ -157,6 +157,7 @@ and optional Maven parameters.
 test-automation-frameworks-portfolio
  ├── java-desktop-macos-test-automation-framework
  ├── java-playwright-test-automation-framework
+ ├── ts-playwright-test-automation-framework
  ├── java-selenium-test-automation-framework
  │    ├── allure-results  
  │    ├── src
