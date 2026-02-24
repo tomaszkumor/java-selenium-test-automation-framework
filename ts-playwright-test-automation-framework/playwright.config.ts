@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import { loadConfig } from './src/main/code/config/ConfigLoader';
+import { loadConfig } from './src/main/code/config/ConfigManager';
 
 const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
 const appConfig = loadConfig();
